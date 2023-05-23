@@ -16,10 +16,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a4ca527b-f78a-4844-9318-c647e856d35b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/.idea/vcs.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +27,7 @@
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="vpj0yo1m" />
@@ -71,7 +68,7 @@
       <updated>1684448926682</updated>
       <workItem from="1684448927926" duration="6910000" />
       <workItem from="1684720951045" duration="637000" />
-      <workItem from="1684802199597" duration="144000" />
+      <workItem from="1684802199597" duration="766000" />
     </task>
     <servers />
   </component>
