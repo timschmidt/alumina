@@ -16,7 +16,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a4ca527b-f78a-4844-9318-c647e856d35b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../ui/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +53,8 @@
     "cidr.known.project.marker": "true",
     "last_opened_file_path": "/home/tim/Documents/GitHub/alumina/firmware",
     "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true"
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   }
 }]]></component>
   <component name="RustProjectSettings">
@@ -69,10 +72,17 @@
       <workItem from="1684448927926" duration="6910000" />
       <workItem from="1684720951045" duration="637000" />
       <workItem from="1684802199597" duration="766000" />
+      <workItem from="1684857986386" duration="2916000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+      <path value="$PROJECT_DIR$/w5500-rs" />
+    </ignored-roots>
   </component>
 </project>
