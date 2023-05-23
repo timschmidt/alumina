@@ -1,0 +1,22 @@
+[package]
+name = "replimat-firmware"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+embedded-hal = "0.2"
+nb = "1"
+cortex-m = "0.7"
+cortex-m-rt = "0.6.15"
+# Panic behaviour, see https://crates.io/keywords/panic-impl for alternatives
+panic-halt = "0.2"
+
+w5500 = "0.4.1"
+w5500-ll = {version = "0.10.4", features = ["defmt", "embedded-hal"]}
+w5500-hl = "0.9.0"
+
+[dependencies.stm32f4xx-hal]
+version = "0.10"
+features = ["rt", "stm32f411"] # replace the model of your microcontroller here
