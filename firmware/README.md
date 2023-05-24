@@ -7,7 +7,7 @@ To get started with embedded rust, there's a really good book: [The Embedded Rus
 
 Code also relies on [stm32f4xx-hal](https://github.com/stm32-rs/stm32f4xx-hal) which is, as name implies, a HAL written in rust for stm32f4 series.
 
-To work with ws2812 ledstrip, I used [smart-leds](https://github.com/smart-leds-rs/smart-leds) library, which uses [SPI driver](https://github.com/smart-leds-rs/ws2812-spi-rs). It's an amazing library, simple to use and works great.
+To work with the Wiznet W5500 ethernet module I have used the [w5500-rs](https://github.com/newAM/w5500-rs) crate which provides a driver and network protocol support for the Wiznet W5500 chip in Rust.
 
 ## Important
 

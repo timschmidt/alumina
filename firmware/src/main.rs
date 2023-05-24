@@ -1,19 +1,22 @@
 #![no_main] // The no_main attribute indicates to the Rust compiler not to link to the Rust standard runtime. This is commonly used for bare-metal and embedded programming.
 #![no_std] // The no_std attribute disables the standard library. This is commonly used in embedded systems where there may not be OS-level features that the standard library requires.
 
-// This line imports the panic_halt crate to handle panics, i.e., unexpected program errors.
-use panic_halt as _;
-
+use panic_halt as _; // This line imports the panic_halt crate to handle panics, i.e., unexpected program errors.
 use cortex_m_rt::entry; // The cortex_m_rt crate provides runtime functionality for Cortex-M processors.
 use stm32f4xx_hal as hal; // The stm32f4xx_hal crate provides a Hardware Abstraction Layer (HAL) for the STM32F4xx family of microcontrollers.
-
-use crate::hal::delay::Delay; // Importing the Delay struct for creating delay functionalities.
+//use crate::hal::delay::Delay; // Importing the Delay struct for creating delay functionalities.
 use crate::hal::pac; // The pac module (Peripheral Access Crate) provides a low-level access to the microcontroller's peripherals.
 use crate::hal::prelude::*; // The prelude module usually re-exports the most important parts of the crate to easily include them all at once.
 use crate::hal::spi::Spi; // Importing the Serial Peripheral Interface (SPI) struct for serial communication.
-use w5500_ll::{blocking::vdm::W5500, Registers}; // The w5500_ll crate provides low-level access to the WIZnet W5500 Ethernet chip.
-use w5500_hl::ll::{net::{Ipv4Addr, SocketAddrV4}, Sn}; // The w5500_hl crate provides high-level access to the WIZnet W5500 Ethernet chip.
-use w5500_hl::Tcp; // Importing the TCP protocol struct.
+use fugit::Rate; // no_std library for computing rates and durations at compile time
+use w5500_hl::{ // The w5500_hl crate provides high-level access to the WIZnet W5500 Ethernet chip.
+    ll::{blocking::vdm::W5500, Registers, Sn, SocketInterrupt},// The w5500_ll crate provides low-level access to the WIZnet W5500 Ethernet chip.
+    net::{Ipv4Addr, SocketAddrV4},
+    Tcp,
+};
+// global_allocator is currently avaliable on nightly for embedded rust
+//extern crate alloc;
+//use alloc::vec::{self, Vec};
 
 #[entry] // The entry attribute from the cortex_m_rt crate defines the entry point of the program.
 fn main() -> ! { // The main function is the entry point of the program. The '!' return type indicates that this function will never return.
@@ -24,10 +27,10 @@ fn main() -> ! { // The main function is the entry point of the program. The '!'
     ) {
         // Constrain the Reset and Clock Control (RCC) peripheral to freeze its configuration and get a handle to the clock configuration.
         let rcc = dp.RCC.constrain();
-        let clocks = rcc.cfgr.sysclk(48.mhz()).freeze();
+        let clocks = rcc.cfgr.sysclk(Rate::<u32, 1, 1>::from_raw(48_000_000)).freeze();
 
         // Initialize a delay provider.
-        let mut delay = Delay::new(cp.SYST, &clocks);
+        //let mut delay = Delay::new(cp.SYST, &clocks);
 
         // Split the GPIOA and GPIOC peripherals into their constituent pins.
         let gpioa = dp.GPIOA.split();
@@ -44,7 +47,7 @@ fn main() -> ! { // The main function is the entry point of the program. The '!'
         let mosi1 = gpioa.pa7.into_alternate(); // Master Out Slave In pin
 
         // Initialize the SPI1 peripheral with a frequency of 3 MHz.
-        let spi = Spi::new(dp.SPI1, (sck1, miso1,mosi1), embedded_hal::spi::MODE_0, 3_000_000.hz(), clocks);
+        let spi = Spi::new(dp.SPI1, (sck1, miso1, mosi1), embedded_hal::spi::MODE_0, Rate::<u32, 1, 1>::from_raw(3_000_000), &clocks);
 
         // Initialize the W5500 Ethernet chip with the SPI interface and the chip select pin.
         let mut w5500 = W5500::new(spi, cs);
@@ -53,17 +56,31 @@ fn main() -> ! { // The main function is the entry point of the program. The '!'
         assert_eq!(version, 0x04);
 
         // Define the socket number and port number for HTTP communication.
-        const HTTP_SOCKET: Sn = Sn::Sn1;
+        const HTTP_SOCKET: Sn = Sn::Sn0;
         const HTTP_PORT: u16 = 80;
 
         // Instruct the W5500 chip to start listening for TCP connections on the defined socket and port.
-        match w5500.tcp_listen(HTTP_SOCKET, HTTP_PORT) {
-            Result => {} // If the tcp_listen function returns a Result, it's ignored.
-            Option => {} // If the tcp_listen function returns an Option, it's also ignored.
+        let connection  = w5500.tcp_listen(HTTP_SOCKET, HTTP_PORT);
+
+        // wait for the RECV interrupt, indicating there is data to read from a client
+        loop {
+            let sn_ir = w5500.sn_ir(HTTP_SOCKET).unwrap();
+            if sn_ir.recv_raised() {
+                w5500.set_sn_ir(HTTP_SOCKET, sn_ir).unwrap();
+                panic!("HTTP request received");
+            }
+            if sn_ir.discon_raised() | sn_ir.timeout_raised() {
+                panic!("Socket disconnected while waiting for RECV");
+            }
         }
+
+        //let mut buf: Vec<u8> = vec![0; 256];
+        //let rx_bytes: u16 = w5500.tcp_read(HTTP_SOCKET, &mut buf)?;
+        // Truncate the buffer to the number of bytes read
+        // Safety: BUF is only borrowed mutably in one location
+        //let filled_buf: &[u8] = &buf[..rx_bytes.into()];
+
+        // parse HTTP request here using filled_buf
     }
-    // A never-ending loop. In embedded systems, this is common as the program is supposed to keep running until the system is powered off.
-    loop {
-        continue;
-    }
+    else { panic!("Unable to take control of microcontroller peripherals") }
 }
