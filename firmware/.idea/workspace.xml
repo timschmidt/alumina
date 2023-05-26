@@ -16,11 +16,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a4ca527b-f78a-4844-9318-c647e856d35b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/crates/egui_demo_lib/src/demo/demo_app_windows.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/crates/egui_demo_lib/src/demo/demo_app_windows.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/crates/egui_demo_lib/src/demo/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/crates/egui_demo_lib/src/demo/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/docs/egui_demo_app_bg.wasm" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +75,7 @@
       <workItem from="1684448927926" duration="6910000" />
       <workItem from="1684720951045" duration="637000" />
       <workItem from="1684802199597" duration="766000" />
-      <workItem from="1684857986386" duration="12611000" />
+      <workItem from="1684857986386" duration="17858000" />
     </task>
     <servers />
   </component>

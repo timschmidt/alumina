@@ -40,6 +40,9 @@ fn main() -> ! { // The main function is the entry point of the program. The '!'
         let mut led = gpioc.pc13.into_push_pull_output();
         led.set_low();
 
+        // Configure pin 0 of GPIOA to be a pull-up input for the button.
+        let button = gpioa.pa0.into_pull_up_input();
+
         // Configure pins for SPI communication.
         let cs = gpioa.pa4.into_push_pull_output(); // Chip select pin
         let sck1 = gpioa.pa5.into_alternate(); // Serial Clock pin
@@ -71,6 +74,10 @@ fn main() -> ! { // The main function is the entry point of the program. The '!'
             }
             if sn_ir.discon_raised() | sn_ir.timeout_raised() {
                 panic!("Socket disconnected while waiting for RECV");
+            }
+
+            if button.is_low() {  // Unwrap is used here to handle the Result returned by is_low().
+                led.toggle();  // Unwrap is used here to handle the Result returned by toggle().
             }
         }
 

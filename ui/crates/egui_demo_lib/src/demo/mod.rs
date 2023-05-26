@@ -26,7 +26,7 @@ pub mod images;
 pub mod serialcomms;
 pub mod networkcomms;
 pub mod catalog;
-pub mod gcode;
+//pub mod gcode;
 pub mod application_log;
 pub mod codecad;
 pub mod mesh;

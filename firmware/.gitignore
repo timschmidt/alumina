@@ -1,1 +1,8 @@
-/target
+.DS_Store
+target
+**/target
+**/target_ra
+**/target_wasm
+/.*.json
+/.vscode
+/media/*

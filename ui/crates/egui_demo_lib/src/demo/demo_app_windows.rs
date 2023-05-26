@@ -40,7 +40,7 @@ impl Default for Demos {
             Box::new(super::mesh::Mesh::default()),
             Box::new(super::database::Database::default()),
             Box::new(super::catalog::Catalog::default()),
-            Box::new(super::gcode::Gcode::default()),
+            //Box::new(super::gcode::Gcode::default()),
             Box::new(super::application_log::ApplicationLog::default()),
             Box::new(super::controls::Controls::default()),
             Box::new(super::scrolling::Scrolling::default()),
