@@ -17,6 +17,7 @@ w5500 = "0.4.1"
 w5500-ll = {version = "0.10.4", features = ["defmt", "embedded-hal"]}
 w5500-hl = "0.9.0"
 fugit = "0.3.6"
+debouncr = "0.2.2"
 
 #smoltcp = {version = "0.9.1", default-features = false, features = [""]}
 #async-gcode = "0.3.0" #no-std async gcode parser

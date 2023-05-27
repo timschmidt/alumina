@@ -3,7 +3,9 @@
 
 use panic_halt as _; // This line imports the panic_halt crate to handle panics, i.e., unexpected program errors.
 use cortex_m_rt::entry; // The cortex_m_rt crate provides runtime functionality for Cortex-M processors.
-use stm32f4xx_hal as hal; // The stm32f4xx_hal crate provides a Hardware Abstraction Layer (HAL) for the STM32F4xx family of microcontrollers.
+use stm32f4xx_hal as hal;
+use hal::gpio::Input;
+// The stm32f4xx_hal crate provides a Hardware Abstraction Layer (HAL) for the STM32F4xx family of microcontrollers.
 //use crate::hal::delay::Delay; // Importing the Delay struct for creating delay functionalities.
 use crate::hal::pac; // The pac module (Peripheral Access Crate) provides a low-level access to the microcontroller's peripherals.
 use crate::hal::prelude::*; // The prelude module usually re-exports the most important parts of the crate to easily include them all at once.
@@ -14,6 +16,7 @@ use w5500_hl::{ // The w5500_hl crate provides high-level access to the WIZnet W
     net::{Ipv4Addr, SocketAddrV4},
     Tcp,
 };
+use debouncr::debounce_4;
 // global_allocator is currently avaliable on nightly for embedded rust
 //extern crate alloc;
 //use alloc::vec::{self, Vec};
@@ -42,6 +45,7 @@ fn main() -> ! { // The main function is the entry point of the program. The '!'
 
         // Configure pin 0 of GPIOA to be a pull-up input for the button.
         let button = gpioa.pa0.into_pull_up_input();
+        let mut debouncer = debounce_4(false); // Type: Debouncer<u8, Repeat4>
 
         // Configure pins for SPI communication.
         let cs = gpioa.pa4.into_push_pull_output(); // Chip select pin
@@ -76,8 +80,18 @@ fn main() -> ! { // The main function is the entry point of the program. The '!'
                 panic!("Socket disconnected while waiting for RECV");
             }
 
-            if button.is_low() {  // Unwrap is used here to handle the Result returned by is_low().
-                led.toggle();  // Unwrap is used here to handle the Result returned by toggle().
+            // Read the button state and update the debouncer
+            let button_state = button.is_low();
+            if let Some(edge) = debouncer.update(button_state) {
+                match edge {
+                    debouncr::Edge::Rising => {
+                        // Handle button press
+                        led.toggle();
+                    }
+                    debouncr::Edge::Falling => {
+                        // Handle button release
+                    }
+                }
             }
         }
 

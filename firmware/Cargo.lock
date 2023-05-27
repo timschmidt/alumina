@@ -102,6 +102,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6548a0ad5d2549e111e1f6a11a6c2e2d00ce6a3dafe22948d67c2b443f775e52"
 
 [[package]]
+name = "debouncr"
+version = "0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "78d141ae1bf4aa25e3d1981ef8426c60d0087b4417ad891bbf762e45f173906b"
+dependencies = [
+ "doc-comment",
+]
+
+[[package]]
 name = "defmt"
 version = "0.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -143,6 +152,12 @@ dependencies = [
  "quote",
  "syn 1.0.109",
 ]
+
+[[package]]
+name = "doc-comment"
+version = "0.3.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fea41bba32d969b513997752735605054bc0dfa92b4c56bf1189f2e174be7a10"
 
 [[package]]
 name = "embedded-dma"
@@ -327,6 +342,7 @@ version = "0.1.0"
 dependencies = [
  "cortex-m",
  "cortex-m-rt",
+ "debouncr",
  "embedded-hal 0.2.7",
  "fugit",
  "nb 1.1.0",
