@@ -118,6 +118,12 @@ pub fn window_builder<E>(
             .with_fullsize_content_view(true);
     }
 
+    #[cfg(all(feature = "wayland", target_os = "linux"))]
+    if let Some(app_id) = &native_options.app_id {
+        use winit::platform::wayland::WindowBuilderExtWayland as _;
+        window_builder = window_builder.with_name(app_id, "");
+    }
+
     if let Some(min_size) = *min_window_size {
         window_builder = window_builder.with_min_inner_size(points_to_size(min_size));
     }
@@ -329,6 +335,7 @@ pub struct EpiIntegration {
     can_drag_window: bool,
     window_state: WindowState,
     follow_system_theme: bool,
+    app_icon_setter: super::app_icon::AppTitleIconSetter,
 }
 
 impl EpiIntegration {
@@ -338,7 +345,8 @@ impl EpiIntegration {
         max_texture_side: usize,
         window: &winit::window::Window,
         system_theme: Option<Theme>,
-        follow_system_theme: bool,
+        app_name: &str,
+        native_options: &crate::NativeOptions,
         storage: Option<Box<dyn epi::Storage>>,
         #[cfg(feature = "glow")] gl: Option<std::sync::Arc<glow::Context>>,
         #[cfg(feature = "wgpu")] wgpu_render_state: Option<egui_wgpu::RenderState>,
@@ -378,6 +386,11 @@ impl EpiIntegration {
         egui_winit.set_max_texture_side(max_texture_side);
         egui_winit.set_pixels_per_point(native_pixels_per_point);
 
+        let app_icon_setter = super::app_icon::AppTitleIconSetter::new(
+            app_name.to_owned(),
+            native_options.icon_data.clone(),
+        );
+
         Self {
             frame,
             last_auto_save: std::time::Instant::now(),
@@ -387,7 +400,8 @@ impl EpiIntegration {
             close: false,
             can_drag_window: false,
             window_state,
-            follow_system_theme,
+            follow_system_theme: native_options.follow_system_theme,
+            app_icon_setter,
         }
     }
 
@@ -474,6 +488,8 @@ impl EpiIntegration {
     ) -> egui::FullOutput {
         let frame_start = std::time::Instant::now();
 
+        self.app_icon_setter.update();
+
         self.frame.info.window_info =
             read_window_info(window, self.egui_ctx.pixels_per_point(), &self.window_state);
         let raw_input = self.egui_winit.take_egui_input(window);
@@ -547,6 +563,7 @@ impl EpiIntegration {
         }
     }
 
+    #[allow(clippy::unused_self)]
     pub fn save(&mut self, _app: &mut dyn epi::App, _window: &winit::window::Window) {
         #[cfg(feature = "persistence")]
         if let Some(storage) = self.frame.storage_mut() {

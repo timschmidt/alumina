@@ -42,15 +42,74 @@
 //!
 //! ## Usage, web:
 //! ``` no_run
-//! #[cfg(target_arch = "wasm32")]
+//! # #[cfg(target_arch = "wasm32")]
 //! use wasm_bindgen::prelude::*;
 //!
-//! /// Call this once from the HTML.
-//! #[cfg(target_arch = "wasm32")]
+//! /// Your handle to the web app from JavaScript.
+//! # #[cfg(target_arch = "wasm32")]
+//! #[derive(Clone)]
 //! #[wasm_bindgen]
-//! pub async fn start(canvas_id: &str) -> Result<AppRunnerRef, eframe::wasm_bindgen::JsValue> {
-//!     let web_options = eframe::WebOptions::default();
-//!     eframe::start_web(canvas_id, web_options, Box::new(|cc| Box::new(MyEguiApp::new(cc)))).await
+//! pub struct WebHandle {
+//!     runner: WebRunner,
+//! }
+//!
+//! # #[cfg(target_arch = "wasm32")]
+//! #[wasm_bindgen]
+//! impl WebHandle {
+//!     /// Installs a panic hook, then returns.
+//!     #[allow(clippy::new_without_default)]
+//!     #[wasm_bindgen(constructor)]
+//!     pub fn new() -> Self {
+//!         // Redirect [`log`] message to `console.log` and friends:
+//!         eframe::WebLogger::init(log::LevelFilter::Debug).ok();
+//!
+//!         Self {
+//!             runner: WebRunner::new(),
+//!         }
+//!     }
+//!
+//!     /// Call this once from JavaScript to start your app.
+//!     #[wasm_bindgen]
+//!     pub async fn start(&self, canvas_id: &str) -> Result<(), wasm_bindgen::JsValue> {
+//!         self.runner
+//!             .start(
+//!                 canvas_id,
+//!                 eframe::WebOptions::default(),
+//!                 Box::new(|cc| Box::new(MyEguiApp::new(cc))),
+//!             )
+//!             .await
+//!     }
+//!
+//!     // The following are optional:
+//!
+//!     #[wasm_bindgen]
+//!     pub fn destroy(&self) {
+//!         self.runner.destroy();
+//!     }
+//!
+//!     /// Example on how to call into your app from JavaScript.
+//!     #[wasm_bindgen]
+//!     pub fn example(&self) {
+//!         if let Some(app) = self.runner.app_mut::<MyEguiApp>() {
+//!             app.example();
+//!         }
+//!     }
+//!
+//!     /// The JavaScript can check whether or not your app has crashed:
+//!     #[wasm_bindgen]
+//!     pub fn has_panicked(&self) -> bool {
+//!         self.runner.has_panicked()
+//!     }
+//!
+//!     #[wasm_bindgen]
+//!     pub fn panic_message(&self) -> Option<String> {
+//!         self.runner.panic_summary().map(|s| s.message())
+//!     }
+//!
+//!     #[wasm_bindgen]
+//!     pub fn panic_callstack(&self) -> Option<String> {
+//!         self.runner.panic_summary().map(|s| s.callstack())
+//!     }
 //! }
 //! ```
 //!
@@ -82,60 +141,16 @@ pub use epi::*;
 // When compiling for web
 
 #[cfg(target_arch = "wasm32")]
-pub mod web;
-
-#[cfg(target_arch = "wasm32")]
 pub use wasm_bindgen;
-
-#[cfg(target_arch = "wasm32")]
-use web::AppRunnerRef;
 
 #[cfg(target_arch = "wasm32")]
 pub use web_sys;
 
-/// Install event listeners to register different input events
-/// and start running the given app.
-///
-/// ``` no_run
-/// #[cfg(target_arch = "wasm32")]
-/// use wasm_bindgen::prelude::*;
-///
-/// /// This is the entry-point for all the web-assembly.
-/// /// This is called from the HTML.
-/// /// It loads the app, installs some callbacks, then returns.
-/// /// It returns a handle to the running app that can be stopped calling `AppRunner::stop_web`.
-/// /// You can add more callbacks like this if you want to call in to your code.
-/// #[cfg(target_arch = "wasm32")]
-/// #[wasm_bindgen]
-/// pub struct WebHandle {
-///     handle: AppRunnerRef,
-/// }
-/// #[cfg(target_arch = "wasm32")]
-/// #[wasm_bindgen]
-/// pub async fn start(canvas_id: &str) -> Result<WebHandle, eframe::wasm_bindgen::JsValue> {
-///     let web_options = eframe::WebOptions::default();
-///     eframe::start_web(
-///         canvas_id,
-///         web_options,
-///         Box::new(|cc| Box::new(MyEguiApp::new(cc))),
-///     )
-///     .await
-///     .map(|handle| WebHandle { handle })
-/// }
-/// ```
-///
-/// # Errors
-/// Failing to initialize WebGL graphics.
 #[cfg(target_arch = "wasm32")]
-pub async fn start_web(
-    canvas_id: &str,
-    web_options: WebOptions,
-    app_creator: AppCreator,
-) -> std::result::Result<AppRunnerRef, wasm_bindgen::JsValue> {
-    let handle = web::start(canvas_id, web_options, app_creator).await?;
+pub mod web;
 
-    Ok(handle)
-}
+#[cfg(target_arch = "wasm32")]
+pub use web::{WebLogger, WebRunner};
 
 // ----------------------------------------------------------------------------
 // When compiling natively
@@ -239,7 +254,7 @@ pub fn run_native(
 ///             if ui.button("Click each year").clicked() {
 ///                 age += 1;
 ///             }
-///             ui.label(format!("Hello '{}', age {}", name, age));
+///             ui.label(format!("Hello '{name}', age {age}"));
 ///         });
 ///     })
 /// }
@@ -297,27 +312,28 @@ pub type Result<T> = std::result::Result<T, Error>;
 // ---------------------------------------------------------------------------
 
 #[cfg(not(target_arch = "wasm32"))]
-#[cfg(any(feature = "glow", feature = "wgpu"))]
 mod profiling_scopes {
+    #![allow(unused_macros)]
+    #![allow(unused_imports)]
+
     /// Profiling macro for feature "puffin"
     macro_rules! profile_function {
-    ($($arg: tt)*) => {
-        #[cfg(feature = "puffin")]
-        puffin::profile_function!($($arg)*);
-    };
-}
+        ($($arg: tt)*) => {
+            #[cfg(feature = "puffin")]
+            puffin::profile_function!($($arg)*);
+        };
+    }
     pub(crate) use profile_function;
 
     /// Profiling macro for feature "puffin"
     macro_rules! profile_scope {
-    ($($arg: tt)*) => {
-        #[cfg(feature = "puffin")]
-        puffin::profile_scope!($($arg)*);
-    };
-}
+        ($($arg: tt)*) => {
+            #[cfg(feature = "puffin")]
+            puffin::profile_scope!($($arg)*);
+        };
+    }
     pub(crate) use profile_scope;
 }
 
 #[cfg(not(target_arch = "wasm32"))]
-#[cfg(any(feature = "glow", feature = "wgpu"))]
 pub(crate) use profiling_scopes::*;

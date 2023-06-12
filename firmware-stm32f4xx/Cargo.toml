@@ -1,0 +1,124 @@
+[package]
+name = "replimat-firmware"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+embedded-hal = "0.2"
+stm32f4xx-hal = { version = "0.16.0", features = ["rt", "stm32f411"] }
+nb = "1"
+cortex-m = {version = "0.7"}
+cortex-m-rt = "0.7.3"
+panic-halt = "0.2" # Panic behaviour, see https://crates.io/keywords/panic-impl for alternatives
+
+w5500 = "0.4.1"
+w5500-ll = {version = "0.10.4", features = ["defmt", "embedded-hal"]}
+w5500-hl = "0.9.0"
+fugit = "0.3.6"
+debouncr = "0.2.2"
+
+#smoltcp = {version = "0.9.1", default-features = false, features = [""]}
+#async-gcode = "0.3.0" #no-std async gcode parser
+#tlvc = { git = "https://github.com/oxidecomputer/tlvc.git" }
+#postcard = "1.0.2"
+#loadstone = "1.0.0"
+#serialmessage = "0.1.1"
+#fancp = "0.6.0"
+#bbqueue = "0.5.1"
+#embedded-can = "0.4.1"
+#embedded-crc-macros = "1.0.0"
+#crc = "3.0.0"
+#undo = "0.47.2"
+# Integer Math
+#average = "0.13.1"
+#ema = "0.1.1"
+#time-series-filter = "0.1.0"
+#constrained_int = "0.2.2"
+#integer_angles = "0.2.0"
+#cordic = "0.1.5"
+#fixed = "1.19.0"
+#integer-sqrt = "0.1.5"
+#integer-cbrt = "0.1.2"
+# Time
+#embedded-time = "0.12.1"
+# Steppers
+#ramp-maker = "0.2.0"
+#stepper = "0.6.0"
+#accel-stepper = "0.1.0"
+#enterpolation = "0.1.1"
+# Encoders
+#rotary-encoder-embedded = "0.2.0" # no-std, angular velocity
+#rotary-encoder-hal = "0.5.0" # platform agnostic
+#qei = "1.0.2"
+# Control
+#pid-lite = "1.1.0"
+#pid-ctrl = "0.1.3"
+#conreg = "0.1.0"
+#control = "1.0.0"
+#governor = "0.5.0"
+#thermostat = "0.0.2"
+#hvac = "0.1.0"
+# I/O
+#shift-register-driver = "0.1.1"
+#port-expander = "0.3.0"
+#inverted-pin = "0.2.0"
+#switch-hal = "0.4.0"
+# Key Value Database
+#tickv = "1.0.0"
+#kvs = "0.0.4"
+# LCD / DLP Printing support
+#tinyqoi = "0.1.0"
+#teeny-qoi = "0.1.0"
+#rapid-qoi = "0.6.1"
+# Accelerometers
+#accelerometer = "0.12.0"
+#icm20948_driver = "0.2.0"
+#ad5668 = "0.1.3"
+#adxl343 = "0.8.0"
+# Amazon IoT
+#rustot = "0.3.2"
+#kard = "0.0.1"
+# Physical network address mapping
+#violin = "0.0.2"
+# Units
+#millimeter = "0.1.0"
+#dimensioned = "0.8.0"
+# Code coverage
+#minicov = "0.2.4"
+# Network
+#stm32-eth = "0.3.0"
+#enc28j60 = "0.2.1"
+#minimq = "0.6.2"
+#w5500-tls = "0.1.3"
+#w5500-dhcp = "0.4.2"
+#w5500-dns = "0.2.0"
+#w5500-sntp = "0.2.0"
+#httparse = { version = "1.8.0", default-features = false, features = []}
+#http = {version = "0.2.9", default-features = false, features = []}
+#w5500-mqtt = "0.1.2"
+#embedded-websocket = "0.8.0"
+#ws-frame = "0.1.1"
+#embedded-nal = "0.6.0"
+#smoltcp-nal = "0.2.1"
+# Onewire bus
+#one-wire-bus = "0.1.1"
+#onewire = "0.3.13"
+# UUIDs
+#nuuid = "0.4.6"
+# Filesystems and disks
+#fat32 = "0.2.0"
+#ntfs = "0.2.0"
+#gpt_disk_io = "0.14.0"
+#embedded-sdmmc = "0.3.0"
+#embedded-storage = "0.3.0"
+#embedded-storage-async = "0.3.0"
+#async-embedded-sdmmc = "0.1.0"
+# Waveforms
+#waver = "0.1.0"
+#wavegen = "0.2.2"
+# USB device mode
+#usbd-human-interface-device = "0.3.1"
+#usb-device = "0.2.9"
+#usbd-dfu-rt = "0.1.0"

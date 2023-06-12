@@ -34,12 +34,12 @@ TARGET="target"
 
 echo "Generating JS bindings for wasm…"
 
-rm -f "${CRATE_NAME}_bg.wasm" # Remove old output (if any)
+#rm -f "${CRATE_NAME}.wasm" # Remove old output (if any)
 
 TARGET_NAME="${CRATE_NAME}.wasm"
 wasm-bindgen "${TARGET}/wasm32-unknown-unknown/$BUILD/$TARGET_NAME" \
   --out-dir . --no-modules --no-typescript
 
 # Remove output:
-rm -f "${CRATE_NAME}_bg.wasm"
-rm -f "${CRATE_NAME}.js"
+#rm -f "${CRATE_NAME}.wasm"
+#rm -f "${CRATE_NAME}.js"

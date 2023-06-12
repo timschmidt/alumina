@@ -1,4 +1,4 @@
-//! Demo app for egui
+//! Alumina CNC
 
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // hide console window on Windows in release
 
@@ -28,7 +28,7 @@ fn main() -> Result<(), eframe::Error> {
         ..Default::default()
     };
     eframe::run_native(
-        "cnc-rs",
+        "Alumina CNC",
         options,
         Box::new(|cc| Box::new(egui_demo_app::WrapApp::new(cc))),
     )

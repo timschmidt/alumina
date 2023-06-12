@@ -16,7 +16,7 @@ pub struct RawInput {
     /// Position and size of the area that egui should use, in points.
     /// Usually you would set this to
     ///
-    /// `Some(Rect::from_pos_size(Default::default(), screen_size_in_points))`.
+    /// `Some(Rect::from_min_size(Default::default(), screen_size_in_points))`.
     ///
     /// but you could also constrain egui to some smaller portion of your window if you like.
     ///
@@ -466,6 +466,16 @@ impl Modifiers {
 
     /// Check for equality but with proper handling of [`Self::command`].
     ///
+    /// # Example:
+    /// ```
+    /// # use egui::Modifiers;
+    /// # let current_modifiers = Modifiers::default();
+    /// if current_modifiers.matches(Modifiers::ALT | Modifiers::SHIFT) {
+    ///     // Alt and Shift are pressed, and nothing else
+    /// }
+    /// ```
+    ///
+    /// ## Behavior:
     /// ```
     /// # use egui::Modifiers;
     /// assert!(Modifiers::CTRL.matches(Modifiers::CTRL));
@@ -510,6 +520,65 @@ impl Modifiers {
 
         true
     }
+
+    /// Whether another set of modifiers is contained in this set of modifiers with proper handling of [`Self::command`].
+    ///
+    /// ```
+    /// # use egui::Modifiers;
+    /// assert!(Modifiers::default().contains(Modifiers::default()));
+    /// assert!(Modifiers::CTRL.contains(Modifiers::default()));
+    /// assert!(Modifiers::CTRL.contains(Modifiers::CTRL));
+    /// assert!(Modifiers::CTRL.contains(Modifiers::COMMAND));
+    /// assert!(Modifiers::MAC_CMD.contains(Modifiers::COMMAND));
+    /// assert!(Modifiers::COMMAND.contains(Modifiers::MAC_CMD));
+    /// assert!(Modifiers::COMMAND.contains(Modifiers::CTRL));
+    /// assert!(!(Modifiers::ALT | Modifiers::CTRL).contains(Modifiers::SHIFT));
+    /// assert!((Modifiers::CTRL | Modifiers::SHIFT).contains(Modifiers::CTRL));
+    /// assert!(!Modifiers::CTRL.contains(Modifiers::CTRL | Modifiers::SHIFT));
+    /// ```
+    pub fn contains(&self, query: Modifiers) -> bool {
+        if query == Modifiers::default() {
+            return true;
+        }
+
+        let Modifiers {
+            alt,
+            ctrl,
+            shift,
+            mac_cmd,
+            command,
+        } = *self;
+
+        if alt && query.alt {
+            return self.contains(Modifiers {
+                alt: false,
+                ..query
+            });
+        }
+        if shift && query.shift {
+            return self.contains(Modifiers {
+                shift: false,
+                ..query
+            });
+        }
+
+        if (ctrl || command) && (query.ctrl || query.command) {
+            return self.contains(Modifiers {
+                command: false,
+                ctrl: false,
+                ..query
+            });
+        }
+        if (mac_cmd || command) && (query.mac_cmd || query.command) {
+            return self.contains(Modifiers {
+                mac_cmd: false,
+                command: false,
+                ..query
+            });
+        }
+
+        false
+    }
 }
 
 impl std::ops::BitOr for Modifiers {
@@ -534,6 +603,7 @@ pub struct ModifierNames<'a> {
     pub ctrl: &'a str,
     pub shift: &'a str,
     pub mac_cmd: &'a str,
+    pub mac_alt: &'a str,
 
     /// What goes between the names
     pub concat: &'a str,
@@ -547,6 +617,7 @@ impl ModifierNames<'static> {
         ctrl: "^",
         shift: "⇧",
         mac_cmd: "⌘",
+        mac_alt: "⌥",
         concat: "",
     };
 
@@ -557,6 +628,7 @@ impl ModifierNames<'static> {
         ctrl: "Ctrl",
         shift: "Shift",
         mac_cmd: "Cmd",
+        mac_alt: "Option",
         concat: "+",
     };
 }
@@ -577,7 +649,7 @@ impl<'a> ModifierNames<'a> {
         if is_mac {
             append_if(modifiers.ctrl, self.ctrl);
             append_if(modifiers.shift, self.shift);
-            append_if(modifiers.alt, self.alt);
+            append_if(modifiers.alt, self.mac_alt);
             append_if(modifiers.mac_cmd || modifiers.command, self.mac_cmd);
         } else {
             append_if(modifiers.ctrl || modifiers.command, self.ctrl);
