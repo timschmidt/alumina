@@ -51,6 +51,7 @@ fn main() -> Result<()> {
     let i2c = peripherals.i2c0;
     let config = I2cConfig::new().baudrate(100.kHz().into());
     let i2c = I2cDriver::new(i2c, sda, scl, &config)?;
+    /*
     let temp_sensor_main = Arc::new(Mutex::new(shtc3(i2c)));
     let mut temp_sensor = temp_sensor_main.clone();
     temp_sensor
@@ -58,6 +59,7 @@ fn main() -> Result<()> {
         .unwrap()
         .start_measurement(PowerMode::NormalMode)
         .unwrap();
+     */
 
     // 1.Create a `EspHttpServer` instance using a default configuration
     let mut server = EspHttpServer::new(&Default::default())?;
