@@ -1,3 +1,5 @@
+use std::process::Command;
+
 #[toml_cfg::toml_config]
 pub struct Config {
     #[default("")]
@@ -7,7 +9,10 @@ pub struct Config {
 }
 
 fn main() -> anyhow::Result<()> {
- // Check if the `cfg.toml` file exists and has been filled out.
+   // Build GUI WASM
+   Command::new("../egui/scripts/build_demo_web.sh").arg("--release").status().unwrap();
+
+   // Check if the `cfg.toml` file exists and has been filled out.
     if !std::path::Path::new("cfg.toml").exists() {
         anyhow::bail!("You need to create a `cfg.toml` file with your Wi-Fi credentials! Use `cfg.toml.example` as a template.");
     }

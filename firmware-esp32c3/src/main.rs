@@ -66,20 +66,20 @@ fn main() -> Result<()> {
 
     // 2. Write a handler that returns the index page
     server.fn_handler("/", Method::Get, |request| {
-        let response = request.into_response(200, Some("OK"), &[("Content-Type", "text/html"), ("Content-Encoding", "br")]);
-        response?.write_all(include_bytes!("../index.html.br"))?;
+        let response = request.into_response(200, Some("OK"), &[("Content-Type", "text/html"), ("Content-Encoding", "gzip")]);
+        response?.write_all(include_bytes!("../../egui/docs/index.html.gz"))?;
         Ok(())
     })?;
 
     server.fn_handler("/index.js", Method::Get, |request| {
-        let response = request.into_response(200, Some("OK"), &[("Content-Type", "text/javascript"), ("Content-Encoding", "br")]);
-        response?.write_all(include_bytes!("../../ui/docs/index.js.br"))?;
+        let response = request.into_response(200, Some("OK"), &[("Content-Type", "text/javascript"), ("Content-Encoding", "gzip")]);
+        response?.write_all(include_bytes!("../../egui/docs/index.js.gz"))?;
         Ok(())
     })?;
 
     server.fn_handler("/index.wasm", Method::Get, |request| {
-        let response = request.into_response(200, Some("OK"), &[("Content-Type", "application/wasm"), ("Content-Encoding", "br")]);
-        response?.write_all(include_bytes!("../../ui/docs/index_bg.wasm.br"))?;
+        let response = request.into_response(200, Some("OK"), &[("Content-Type", "application/wasm"), ("Content-Encoding", "gzip")]);
+        response?.write_all(include_bytes!("../../egui/docs/index_bg.wasm.gz"))?;
         Ok(())
     })?;
 
