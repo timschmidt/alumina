@@ -102,7 +102,24 @@ fn main() -> Result<()> {
 
         println!("Received payload: {}", payload);
 
-        // Process the payload as needed...
+        match payload.trim() {
+            "time" => {
+                println!("Reporting time");
+                // ... read system time and report it directly ...
+            },
+            "status_on" => {
+                println!("Turning status LED on");
+                // ... Set pin ? high ...
+            },
+            "status_off" => {
+                println!("Turning status LED off");
+                // ... Set pin ? low ...
+            },
+            _ => {
+                println!("Unknown command: {}", payload);
+                // ... handle unknown command ...
+            },
+        }
 
         // Send a response back to the client
         let response = request.into_response(200, Some("OK"), &[("Content-Type", "text/plain")]);
