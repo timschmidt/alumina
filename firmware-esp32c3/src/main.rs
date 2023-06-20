@@ -16,6 +16,7 @@ use std::{
     time::Duration,
 };
 use embedded_svc::io::Read;
+use esp_idf_hal::gpio::OutputPin;
 use wifi::wifi;
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
@@ -52,6 +53,9 @@ fn main() -> Result<()> {
     let i2c = peripherals.i2c0;
     let config = I2cConfig::new().baudrate(100.kHz().into());
     let i2c = I2cDriver::new(i2c, sda, scl, &config)?;
+    let status_led_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio12)?));
+    let status_led = status_led_main.clone();
+
     /*
     let temp_sensor_main = Arc::new(Mutex::new(shtc3(i2c)));
     let mut temp_sensor = temp_sensor_main.clone();
@@ -90,7 +94,7 @@ fn main() -> Result<()> {
         Ok(())
     })?;
 
-    server.fn_handler("/command", Method::Post, |mut request| {
+    server.fn_handler("/command", Method::Post, move|mut request| {
         // Create a buffer to store the payload
         let mut buffer = [0; 1024];  // Adjust the size as needed
 
@@ -109,11 +113,13 @@ fn main() -> Result<()> {
             },
             "status_on" => {
                 println!("Turning status LED on");
-                // ... Set pin ? high ...
+                // ... Set pin 12/13 high ...
+                status_led.lock().unwrap().set_high()?;
             },
             "status_off" => {
                 println!("Turning status LED off");
-                // ... Set pin ? low ...
+                // ... Set pin 12/13 low ...
+                status_led.lock().unwrap().set_low()?;
             },
             _ => {
                 println!("Unknown command: {}", payload);
