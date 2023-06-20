@@ -15,6 +15,7 @@ use std::{
     thread::sleep,
     time::Duration,
 };
+use embedded_svc::io::Read;
 use wifi::wifi;
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
@@ -86,6 +87,26 @@ fn main() -> Result<()> {
     server.fn_handler("/favicon.ico", Method::Get, |request| {
         let response = request.into_response(200, Some("OK"), &[("Content-Type", "image/gif")]);
         response?.write_all(include_bytes!("../favicon.gif"))?;
+        Ok(())
+    })?;
+
+    server.fn_handler("/command", Method::Post, |mut request| {
+        // Create a buffer to store the payload
+        let mut buffer = [0; 1024];  // Adjust the size as needed
+
+        // Read the payload into the buffer
+        let bytes_read = request.read(&mut buffer)?;
+
+        // Convert the bytes to a string
+        let payload = std::str::from_utf8(&buffer[..bytes_read])?;
+
+        println!("Received payload: {}", payload);
+
+        // Process the payload as needed...
+
+        // Send a response back to the client
+        let response = request.into_response(200, Some("OK"), &[("Content-Type", "text/plain")]);
+        response?.flush()?;
         Ok(())
     })?;
 
