@@ -2,7 +2,7 @@
 resolver = "2"
 members = [
     "crates/ecolor",
-    "crates/egui_demo_app",
+    "crates/alumina_app",
     "crates/egui_demo_lib",
     "crates/egui_extras",
     "crates/egui_glow",

@@ -44,7 +44,7 @@ The demo that you can see at <https://www.egui.rs> is using `eframe` to host the
 Depends on `egui`.
 This contains a bunch of uses of `egui` and looks like the ui code you would write for an `egui` app.
 
-### `egui_demo_app`
+### `alumina_app`
 Thin wrapper around `egui_demo_lib` so we can compile it to a web site or a native app executable.
 Depends on `egui_demo_lib` + `eframe`.
 

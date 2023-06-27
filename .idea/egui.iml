@@ -8,7 +8,6 @@
       <sourceFolder url="file://$MODULE_DIR$/crates/egui-winit/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/egui/examples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/egui/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/crates/egui_demo_app/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/egui_demo_lib/benches" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/crates/egui_demo_lib/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/egui_extras/src" isTestSource="false" />
@@ -34,6 +33,7 @@
       <sourceFolder url="file://$MODULE_DIR$/examples/serial_windows/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/svg/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/user_attention/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/alumina_app/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

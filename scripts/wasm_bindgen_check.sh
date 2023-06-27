@@ -11,7 +11,7 @@ else
   ./scripts/setup_web.sh
 fi
 
-CRATE_NAME="egui_demo_app"
+CRATE_NAME="alumina_app"
 FEATURES="glow,http,persistence,web_screen_reader"
 
 # This is required to enable the web_sys clipboard API which eframe web uses

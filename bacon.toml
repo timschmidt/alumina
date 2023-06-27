@@ -20,7 +20,7 @@ watch = ["tests", "benches", "examples"]
 command = [
     "cargo",
     "cranky",
-    "-p=egui_demo_app",
+    "-p=alumina_app",
     "--lib",
     "--target=wasm32-unknown-unknown",
     "--target-dir=target_wasm",

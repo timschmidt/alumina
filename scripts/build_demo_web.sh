@@ -10,7 +10,7 @@ cd "$script_path/.."
 # https://rustwasm.github.io/docs/wasm-bindgen/web-sys/unstable-apis.html
 export RUSTFLAGS=--cfg=web_sys_unstable_apis
 
-CRATE_NAME="egui_demo_app"
+CRATE_NAME="alumina_app"
 
  # NOTE: persistence use up about 400kB (10%) of the WASM!
 FEATURES="http,persistence,web_screen_reader"
@@ -94,8 +94,8 @@ WASM_PATH="${TARGET}/wasm32-unknown-unknown/$BUILD/$TARGET_NAME"
 wasm-bindgen "${WASM_PATH}" --out-dir docs --out-name ${OUT_FILE_NAME} --no-modules --no-typescript
 
 # if this fails with "error: cannot import from modules (`env`) with `--no-modules`", you can use:
-# wasm2wat target/wasm32-unknown-unknown/release/egui_demo_app.wasm | rg env
-# wasm2wat target/wasm32-unknown-unknown/release/egui_demo_app.wasm | rg "call .now\b" -B 20 # What calls `$now` (often a culprit)
+# wasm2wat target/wasm32-unknown-unknown/release/alumina_app.wasm | rg env
+# wasm2wat target/wasm32-unknown-unknown/release/alumina_app.wasm | rg "call .now\b" -B 20 # What calls `$now` (often a culprit)
 
 # to get wasm-strip:  apt/brew/dnf install wabt
 wasm-strip ${FINAL_WASM_PATH}

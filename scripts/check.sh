@@ -18,8 +18,8 @@ export RUSTDOCFLAGS="-D warnings" # https://github.com/emilk/egui/pull/1454
 
 cargo check --all-targets
 cargo check --all-targets --all-features
-cargo check -p egui_demo_app --lib --target wasm32-unknown-unknown
-cargo check -p egui_demo_app --lib --target wasm32-unknown-unknown --all-features
+cargo check -p alumina_app --lib --target wasm32-unknown-unknown
+cargo check -p alumina_app --lib --target wasm32-unknown-unknown --all-features
 cargo cranky --all-targets --all-features -- -D warnings
 cargo test --all-targets --all-features
 cargo test --doc # slow - checks all doc-tests
@@ -31,8 +31,8 @@ cargo doc --document-private-items --no-deps --all-features
 (cd crates/eframe && cargo check --no-default-features --features "glow")
 (cd crates/eframe && cargo check --no-default-features --features "wgpu")
 (cd crates/egui && cargo check --no-default-features --features "serde")
-(cd crates/egui_demo_app && cargo check --no-default-features --features "glow")
-(cd crates/egui_demo_app && cargo check --no-default-features --features "wgpu")
+(cd crates/alumina_app && cargo check --no-default-features --features "glow")
+(cd crates/alumina_app && cargo check --no-default-features --features "wgpu")
 (cd crates/egui_demo_lib && cargo check --no-default-features)
 (cd crates/egui_extras && cargo check --no-default-features)
 (cd crates/egui_glow && cargo check --no-default-features)
@@ -44,7 +44,7 @@ cargo doc --document-private-items --no-deps --all-features
 
 (cd crates/eframe && cargo check --all-features)
 (cd crates/egui && cargo check --all-features)
-(cd crates/egui_demo_app && cargo check --all-features)
+(cd crates/alumina_app && cargo check --all-features)
 (cd crates/egui_extras && cargo check --all-features)
 (cd crates/egui_glow && cargo check --all-features)
 (cd crates/egui-winit && cargo check --all-features)
@@ -53,7 +53,7 @@ cargo doc --document-private-items --no-deps --all-features
 
 ./scripts/wasm_bindgen_check.sh
 
-cargo cranky --target wasm32-unknown-unknown --all-features -p egui_demo_app --lib -- -D warnings
+cargo cranky --target wasm32-unknown-unknown --all-features -p alumina_app --lib -- -D warnings
 
 ./scripts/cargo_deny.sh
 
@@ -63,7 +63,7 @@ cargo cranky --target wasm32-unknown-unknown --all-features -p egui_demo_app --l
 #
 
 # For finding bloat:
-# cargo bloat --release --bin egui_demo_app -n 200 | rg egui
+# cargo bloat --release --bin alumina_app -n 200 | rg egui
 # Also try https://github.com/google/bloaty
 
 # what compiles slowly?

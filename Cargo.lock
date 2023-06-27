@@ -139,6 +139,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "alumina_app"
+version = "0.22.0"
+dependencies = [
+ "bytemuck",
+ "chrono",
+ "eframe",
+ "egui",
+ "egui_demo_lib",
+ "egui_extras",
+ "ehttp",
+ "env_logger",
+ "image",
+ "log",
+ "poll-promise",
+ "serde",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+ "web-sys",
+]
+
+[[package]]
 name = "android-activity"
 version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1220,27 +1241,6 @@ dependencies = [
  "smithay-clipboard",
  "webbrowser",
  "winit",
-]
-
-[[package]]
-name = "egui_demo_app"
-version = "0.22.0"
-dependencies = [
- "bytemuck",
- "chrono",
- "eframe",
- "egui",
- "egui_demo_lib",
- "egui_extras",
- "ehttp",
- "env_logger",
- "image",
- "log",
- "poll-promise",
- "serde",
- "wasm-bindgen",
- "wasm-bindgen-futures",
- "web-sys",
 ]
 
 [[package]]

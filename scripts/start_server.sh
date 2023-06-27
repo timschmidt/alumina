@@ -4,7 +4,7 @@ script_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$script_path/.."
 
 # Starts a local web-server that serves the contents of the `doc/` folder,
-# i.e. the web-version of `egui_demo_app`.
+# i.e. the web-version of `alumina_app`.
 
 PORT=8888
 

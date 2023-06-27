@@ -137,17 +137,17 @@ jobs:
         with:
           crate: cargo-cranky
 
-      - name: Check wasm32 egui_demo_app
+      - name: Check wasm32 alumina_app
         uses: actions-rs/cargo@v1
         with:
           command: check
-          args: -p egui_demo_app --lib --target wasm32-unknown-unknown
+          args: -p alumina_app --lib --target wasm32-unknown-unknown
 
-      - name: Check wasm32 egui_demo_app --all-features
+      - name: Check wasm32 alumina_app --all-features
         uses: actions-rs/cargo@v1
         with:
           command: check
-          args: -p egui_demo_app --lib --target wasm32-unknown-unknown --all-features
+          args: -p alumina_app --lib --target wasm32-unknown-unknown --all-features
 
       - name: Check wasm32 eframe
         uses: actions-rs/cargo@v1
