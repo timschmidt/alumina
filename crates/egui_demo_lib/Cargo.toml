@@ -21,7 +21,6 @@ all-features = true
 
 [features]
 default = []
-
 chrono = ["egui_extras/datepicker", "dep:chrono"]
 ## Allow serialization using [`serde`](https://docs.rs/serde).
 serde = ["egui/serde", "dep:serde"]
@@ -41,9 +40,15 @@ chrono = { version = "0.4", optional = true, features = ["js-sys", "wasmbind"] }
 ## Enable this when generating docs.
 document-features = { version = "0.2", optional = true }
 serde = { version = "1", optional = true, features = ["derive"] }
-syntect = { version = "5", optional = true, default-features = false, features = [
-    "default-fancy",
-] }
+syntect = { version = "5", optional = true, default-features = false, features = ["default-fancy"] }
+zip = { version = "^0.6.6", default-features = false, features = ["deflate"] } # bzip2 and zstd fail to cross-compile for wasm
+rfd = "^0.11.4"
+svg2polylines = "^0.8.1"
+dxf = "^0.5.0"
+ngc = "^0.2.6"
+gen_gcode = "^0.1.0"
+uuid = { version = "0.8.2", features = ["v4", "wasm-bindgen"] } # js feature is for wasm-bindgen
+wasm-bindgen-futures = "0.4.36"
 
 
 [dev-dependencies]

@@ -36,6 +36,7 @@ impl Default for Demos {
             Box::<super::strip_demo::StripDemo>::default(),
             Box::<super::table_demo::TableDemo>::default(),
             Box::<super::text_edit::TextEdit>::default(),
+            Box::<super::toolpath::Toolpath>::default(),
             Box::<super::widget_gallery::WidgetGallery>::default(),
             Box::<super::window_options::WindowOptions>::default(),
             Box::<super::tests::WindowResizeTest>::default(),
