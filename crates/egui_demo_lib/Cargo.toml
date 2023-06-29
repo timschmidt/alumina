@@ -34,6 +34,7 @@ egui_extras = { version = "0.22.0", path = "../egui_extras" }
 enum-map = { version = "2", features = ["serde"] }
 log = { version = "0.4", features = ["std"] }
 unicode_names2 = { version = "0.6.0", default-features = false }
+futures = "*"
 
 #! ### Optional dependencies
 chrono = { version = "0.4", optional = true, features = ["js-sys", "wasmbind"] }
