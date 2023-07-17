@@ -1,0 +1,35 @@
+[package]
+name = "implicit3d"
+version = "0.14.2"
+authors = ["Henning Meyer <tutmann@gmail.com>"]
+edition = "2018"
+
+description = "3d implicit geometry."
+repository = "https://github.com/hmeyer/implicit3d"
+readme = "README.md"
+keywords = ["implict", "3d", "round", "csg", "primitives"]
+license = "Apache-2.0 OR MIT"
+
+[lib]
+name = "implicit3d"
+path = "src/lib.rs"
+
+[dependencies]
+nalgebra = "0.22"
+alga = "0.9"
+stl_io = "0.5"
+bbox = "0.11"
+num-traits = "0.2"
+
+[dev-dependencies]
+bencher = "0.1"
+approx = "0.3"
+
+[[bench]]
+name = "objects"
+path = "src/benches/objects.rs"
+harness = false
+
+[badges]
+travis-ci = { repository = "hmeyer/implicit3d", branch = "master" }
+codecov = { repository = "hmeyer/implicit3d", branch = "master", service = "github" }

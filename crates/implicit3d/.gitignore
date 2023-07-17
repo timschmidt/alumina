@@ -1,0 +1,9 @@
+**/target/
+Cargo.lock
+./xplicit.stl
+./xplicit.scad
+*.stl
+*.scad
+*~
+*.bk
+_*.stl
