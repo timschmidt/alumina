@@ -4,7 +4,7 @@ use egui::*;
 use gen_gcode::*;
 use ngc::parse::parse;
 use plot::{Plot, PlotResponse};
-use rfd::AsyncFileDialog;
+use rfd::{AsyncFileDialog, FileHandle};
 use std::ffi::OsStr;
 use std::fs;
 use std::future::Future;
@@ -12,12 +12,14 @@ use std::io::{BufReader, Read, Write};
 use std::process::exit;
 use svg2polylines::{self, Polyline};
 use zip;
+use std::sync::{Arc, Mutex};
 
 use crate::demo::Demo;
 
-#[derive(PartialEq, Default, Debug)]
+#[derive(Default, Debug)]
 pub struct Toolpath {
     points_to_plot: Vec<[f64; 2]>,
+    cad_file:  Vec<u8>,
 }
 
 #[derive(Debug)]
@@ -65,7 +67,7 @@ impl super::View for Toolpath {
         let ui_toolpath_grow = ui.button("Grow").on_hover_text("Grow the toolpath by 5mm");
 
         let filepicker_future = async {
-            let file = AsyncFileDialog::new()
+            let filepicker = AsyncFileDialog::new()
                 .add_filter(
                     "Cut files (zip, gcode, nc, ngc, svg, dxf)",
                     &["zip", "gcode", "nc", "ngc", "svg", "dxf"],
@@ -74,14 +76,17 @@ impl super::View for Toolpath {
                 .await
                 .expect("no file has been selected");
 
-            file.read().await
+            self.cad_file = filepicker.read().await;
         };
 
         if ui_open_file.clicked() {
             execute(async {
                 filepicker_future.await;
             });
-            let drawing = Drawing::load(&mut data.as_slice());
+        }
+
+        if self.cad_file.len() > 0 {
+            let drawing = Drawing::load(&mut self.cad_file.as_slice());
 
             let mut bounding_box = BoundingBox {
                 min_x: 0.0,

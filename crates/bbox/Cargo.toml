@@ -1,0 +1,28 @@
+[package]
+name = "bbox"
+version = "0.13.0"
+authors = ["Henning Meyer <tutmann@gmail.com>"]
+edition = "2018"
+
+description = "Managing axis aligned 3d Bounding Boxes."
+repository = "https://github.com/hmeyer/bbox"
+readme = "README.md"
+keywords = ["boundingbox", "3d", "csg", "union", "intersection"]
+license = "Apache-2.0 OR MIT"
+
+[lib]
+name = "bbox"
+path = "src/lib.rs"
+
+[features]
+mint = ["nalgebra/mint"]
+
+[dependencies]
+approx = "0.5.0"
+nalgebra = "0.31.2"
+num-traits = "0.2.14"
+simba = "0.7.2"
+
+[badges]
+travis-ci = { repository = "hmeyer/bbox", branch = "master" }
+codecov = { repository = "hmeyer/bbox", branch = "master", service = "github" }

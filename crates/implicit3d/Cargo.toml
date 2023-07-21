@@ -17,9 +17,11 @@ path = "src/lib.rs"
 [dependencies]
 nalgebra = "0.22"
 alga = "0.9"
+
 stl_io = "0.5"
-bbox = "0.11"
+bbox = { path = "../bbox" }
 num-traits = "0.2"
+simba = "0.8.1"
 
 [dev-dependencies]
 bencher = "0.1"

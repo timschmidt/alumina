@@ -15,6 +15,10 @@ members = [
 ]
 exclude = [
     "crates/firmware-esp32c3",
+    "crates/firmware-embassy",
+    "crates/firmware-stm32f4xx",
+    "crates/implicit3d",
+    "crates/bbox",
 ]
 
 [profile.release]
