@@ -2,7 +2,7 @@
 target = "xtensa-esp32-espidf"
 
 [target.riscv32imc-esp-espidf]
-linker = "ldproxy"
+#linker = "ldproxy"
 runner = "espflash -s 16MB --partition-table partitions.csv --use-stub --monitor"
 # Future - necessary for the experimental "native build" of esp-idf-sys with ESP32C3
 # See also https://github.com/ivmarkov/embuild/issues/16
