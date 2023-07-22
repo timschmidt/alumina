@@ -14,8 +14,9 @@ members = [
     "examples/*",
 ]
 exclude = [
-    "crates/firmware-esp32c3",
     "crates/firmware-embassy",
+    "crates/firmware-esp32-wroom32",
+    "crates/firmware-esp32c3",
     "crates/firmware-stm32f4xx",
     "crates/implicit3d",
     "crates/bbox",
