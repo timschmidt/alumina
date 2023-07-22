@@ -1,7 +1,11 @@
+## Toolchain setup:
+
+cargo install espup  
+espup install  
+
 ## To build:
 
-rustup override set esp
-cargo run --release
+cargo +esp run --release  
 
 ## Troubleshooting
 
