@@ -19,7 +19,7 @@ use crate::demo::Demo;
 #[derive(Default, Debug)]
 pub struct Toolpath {
     points_to_plot: Vec<[f64; 2]>,
-    cad_file:  Vec<u8>,
+    cad_file:  Arc<Mutex<Vec<u8>>>,
 }
 
 #[derive(Debug)]
@@ -28,6 +28,15 @@ struct BoundingBox {
     min_y: f64,
     max_x: f64,
     max_y: f64,
+}
+
+impl Toolpath {
+    pub fn new() -> Toolpath {
+        Toolpath {
+            points_to_plot: vec![],
+            cad_file: Arc::new(Mutex::new(vec![])),
+        }
+    }
 }
 
 impl super::Demo for Toolpath {
@@ -66,7 +75,9 @@ impl super::View for Toolpath {
             .on_hover_text("Shrink the toolpath by 5mm");
         let ui_toolpath_grow = ui.button("Grow").on_hover_text("Grow the toolpath by 5mm");
 
-        let filepicker_future = async {
+        let cad_file_arc = Arc::clone(&self.cad_file);
+
+        let filepicker_future = async move {
             let filepicker = AsyncFileDialog::new()
                 .add_filter(
                     "Cut files (zip, gcode, nc, ngc, svg, dxf)",
@@ -76,17 +87,16 @@ impl super::View for Toolpath {
                 .await
                 .expect("no file has been selected");
 
-            self.cad_file = filepicker.read().await;
+            let mut cad_file = cad_file_arc.lock().unwrap();
+            *cad_file = filepicker.read().await;
         };
 
         if ui_open_file.clicked() {
-            execute(async {
-                filepicker_future.await;
-            });
+            execute(filepicker_future);
         }
 
-        if self.cad_file.len() > 0 {
-            let drawing = Drawing::load(&mut self.cad_file.as_slice());
+        if self.cad_file.lock().unwrap().len() > 0 {
+            let drawing = Drawing::load(&mut self.cad_file.lock().unwrap().as_slice());
 
             let mut bounding_box = BoundingBox {
                 min_x: 0.0,
