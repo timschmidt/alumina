@@ -95,100 +95,102 @@ impl super::View for Toolpath {
             execute(filepicker_future);
         }
 
-        if self.cad_file.lock().unwrap().len() > 0 {
-            let drawing = Drawing::load(&mut self.cad_file.lock().unwrap().as_slice());
+        if let Ok(cad_file_lock) = self.cad_file.lock() {
+            if !cad_file_lock.is_empty() {
+                let drawing = Drawing::load(&mut cad_file_lock.as_slice());
 
-            let mut bounding_box = BoundingBox {
-                min_x: 0.0,
-                min_y: 0.0,
-                max_x: 0.0,
-                max_y: 0.0,
-            };
+                let mut bounding_box = BoundingBox {
+                    min_x: 0.0,
+                    min_y: 0.0,
+                    max_x: 0.0,
+                    max_y: 0.0,
+                };
 
-            //Need to try to figure out how to get vviz crate to interpret circles. Probably will need to convert circle components to f32.
-            let mut list_of_vertices: Vec<[f32; 7]> = vec![[0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0]];
-            let mut indices: Vec<[i16; 2]> = vec![];
-            let mut index = 0;
-            self.points_to_plot = vec![];
-            for e in drawing
-                .expect("Error: DXF File did not parse correctly")
-                .entities()
-            {
-                println!("found entity on layer {}", e.common.layer);
-                match e.specific {
-                    EntityType::Circle(ref circle) => {
-                        // do something with the circle
-                        println!("{:#?}", circle);
-                        // Things that are needed are the center and the radius.
-                        // The center has an x, y, and z which are all f64, the radius is also f64.
+                //Need to try to figure out how to get vviz crate to interpret circles. Probably will need to convert circle components to f32.
+                let mut list_of_vertices: Vec<[f32; 7]> = vec![[0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0]];
+                let mut indices: Vec<[i16; 2]> = vec![];
+                let mut index = 0;
+                self.points_to_plot = vec![];
+                for e in drawing
+                    .expect("Error: DXF File did not parse correctly")
+                    .entities()
+                {
+                    println!("found entity on layer {}", e.common.layer);
+                    match e.specific {
+                        EntityType::Circle(ref circle) => {
+                            // do something with the circle
+                            println!("{:#?}", circle);
+                            // Things that are needed are the center and the radius.
+                            // The center has an x, y, and z which are all f64, the radius is also f64.
+                        }
+                        EntityType::Line(ref line) => {
+                            println!("{:#?}", line);
+                            list_of_vertices.push([
+                                line.p1.x as f32,
+                                line.p1.y as f32,
+                                0.0,
+                                1.0,
+                                0.0,
+                                0.0,
+                                1.0,
+                            ]);
+                            if line.p1.x > bounding_box.max_x {
+                                bounding_box.max_x = line.p1.x
+                            };
+                            if line.p1.x < bounding_box.min_x {
+                                bounding_box.min_x = line.p1.x
+                            };
+                            if line.p1.y > bounding_box.max_y {
+                                bounding_box.max_y = line.p1.y
+                            };
+                            if line.p1.y < bounding_box.min_y {
+                                bounding_box.min_y = line.p1.y
+                            };
+                            indices.push([index, index + 1]);
+                            index = index + 1;
+                            // Not sure if pushing p2 into the list of vertices is required since it seems like p2 in a line is the same as p1 of the next line.
+                            list_of_vertices.push([
+                                line.p2.x as f32,
+                                line.p2.y as f32,
+                                0.0,
+                                1.0,
+                                0.0,
+                                0.0,
+                                1.0,
+                            ]);
+                            if line.p2.x > bounding_box.max_x {
+                                bounding_box.max_x = line.p2.x
+                            };
+                            if line.p2.x < bounding_box.min_x {
+                                bounding_box.min_x = line.p2.x
+                            };
+                            if line.p2.y > bounding_box.max_y {
+                                bounding_box.max_y = line.p2.y
+                            };
+                            if line.p2.y < bounding_box.min_y {
+                                bounding_box.min_y = line.p2.y
+                            };
+                            indices.push([index, index + 1]);
+
+                            self.points_to_plot.push([line.p1.x, line.p1.y]);
+                            self.points_to_plot.push([line.p2.x, line.p2.y]);
+
+                            index = index + 1;
+                        }
+                        _ => (),
                     }
-                    EntityType::Line(ref line) => {
-                        println!("{:#?}", line);
-                        list_of_vertices.push([
-                            line.p1.x as f32,
-                            line.p1.y as f32,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                        ]);
-                        if line.p1.x > bounding_box.max_x {
-                            bounding_box.max_x = line.p1.x
-                        };
-                        if line.p1.x < bounding_box.min_x {
-                            bounding_box.min_x = line.p1.x
-                        };
-                        if line.p1.y > bounding_box.max_y {
-                            bounding_box.max_y = line.p1.y
-                        };
-                        if line.p1.y < bounding_box.min_y {
-                            bounding_box.min_y = line.p1.y
-                        };
-                        indices.push([index, index + 1]);
-                        index = index + 1;
-                        // Not sure if pushing p2 into the list of vertices is required since it seems like p2 in a line is the same as p1 of the next line.
-                        list_of_vertices.push([
-                            line.p2.x as f32,
-                            line.p2.y as f32,
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.0,
-                            1.0,
-                        ]);
-                        if line.p2.x > bounding_box.max_x {
-                            bounding_box.max_x = line.p2.x
-                        };
-                        if line.p2.x < bounding_box.min_x {
-                            bounding_box.min_x = line.p2.x
-                        };
-                        if line.p2.y > bounding_box.max_y {
-                            bounding_box.max_y = line.p2.y
-                        };
-                        if line.p2.y < bounding_box.min_y {
-                            bounding_box.min_y = line.p2.y
-                        };
-                        indices.push([index, index + 1]);
-
-                        self.points_to_plot.push([line.p1.x, line.p1.y]);
-                        self.points_to_plot.push([line.p2.x, line.p2.y]);
-
-                        index = index + 1;
-                    }
-                    _ => (),
                 }
+
+                //if let Some(application_log) = self.state.demo.demo_windows.get_application_log() {
+                //    application_log.add_entry(format!("{:#?}", bounding_box));
+                //    application_log.add_entry(format!("{:#?}", self.points_to_plot));
+                //}
+
+                //super::application_log::ApplicationLog::add_entry(format!("{:#?}", bounding_box));
+                //super::application_log::ApplicationLog::add_entry(format!("{:#?}", self.points_to_plot));
+                println!("{:#?}", bounding_box);
+                println!("{:#?}", self.points_to_plot);
             }
-
-            //if let Some(application_log) = self.state.demo.demo_windows.get_application_log() {
-            //    application_log.add_entry(format!("{:#?}", bounding_box));
-            //    application_log.add_entry(format!("{:#?}", self.points_to_plot));
-            //}
-
-            //super::application_log::ApplicationLog::add_entry(format!("{:#?}", bounding_box));
-            //super::application_log::ApplicationLog::add_entry(format!("{:#?}", self.points_to_plot));
-            println!("{:#?}", bounding_box);
-            println!("{:#?}", self.points_to_plot);
         }
     }
 }
