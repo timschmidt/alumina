@@ -1,6 +1,6 @@
 use anyhow::Result;
 use core::str;
-use embedded_svc::{http::Method, io::Write};
+use embedded_svc::{http::Method, http::Headers, io::Write};
 use esp_idf_hal::{
     i2c::{I2cConfig, I2cDriver},
     prelude::*,
@@ -94,7 +94,10 @@ fn main() -> Result<()> {
         Ok(())
     })?;
 
-    server.fn_handler("/command", Method::Post, move|mut request| {
+    server.fn_handler("/", Method::Post, move|mut request| {
+
+        let header = request.header("Accept").unwrap().to_string();
+
         // Create a buffer to store the payload
         let mut buffer = [0; 1024];  // Adjust the size as needed
 
@@ -112,7 +115,8 @@ fn main() -> Result<()> {
                 // ... read system time and report it directly ...
 
                 let response = request.into_response(200, Some("OK"), &[("Content-Type", "text/plain")]);
-                response?.flush()?;
+                response?.write_all(header.as_bytes())?;
+                //response?.flush()?;
             },
             "status_on" => {
                 println!("Turning status LED on");

@@ -51,6 +51,7 @@ gen_gcode = "^0.1.0"
 uuid = { version = "0.8.2", features = ["v4", "wasm-bindgen"] } # js feature is for wasm-bindgen
 wasm-bindgen-futures = "0.4.36"
 kiss3d = "0.32"
+reqwest = { version = "0.11", features = ["json"] }
 
 
 [dev-dependencies]

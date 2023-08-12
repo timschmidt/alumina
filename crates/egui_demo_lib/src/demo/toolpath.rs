@@ -74,6 +74,8 @@ impl super::View for Toolpath {
             .button("Shrink")
             .on_hover_text("Shrink the toolpath by 5mm");
         let ui_toolpath_grow = ui.button("Grow").on_hover_text("Grow the toolpath by 5mm");
+        let ui_toolpath_status_on = ui.button("On").on_hover_text("Turn the status light on");
+        let ui_toolpath_status_off = ui.button("Off").on_hover_text("Turn the status light off");
 
         let cad_file_arc = Arc::clone(&self.cad_file);
 
@@ -90,6 +92,22 @@ impl super::View for Toolpath {
             let mut cad_file = cad_file_arc.lock().unwrap();
             *cad_file = filepicker.read().await;
         };
+
+        if ui_toolpath_shrink.clicked() {
+
+        }
+
+        if ui_toolpath_grow.clicked() {
+
+        }
+
+        if ui_toolpath_status_on.clicked() {
+            execute(status_on());
+        }
+
+        if ui_toolpath_status_off.clicked() {
+            execute(status_off());
+        }
 
         if ui_open_file.clicked() {
             execute(filepicker_future);
@@ -195,6 +213,30 @@ impl super::View for Toolpath {
     }
 }
 
+async fn status_on() -> () {
+    // Replace with your actual endpoint
+    let url = "http://alumina/";
+
+    // Define the plain text data to send (adjust as needed)
+    let data = "status_on";
+
+    // Make the POST request
+    let client = reqwest::Client::new();
+    let response = client.post(url).body(data).send().await;
+}
+
+async fn status_off() -> () {
+    // Replace with your actual endpoint
+    let url = "http://alumina/";
+
+    // Define the plain text data to send (adjust as needed)
+    let data = "status_off";
+
+    // Make the POST request
+    let client = reqwest::Client::new();
+    let response = client.post(url).body(data).send().await;
+}
+
 fn is_approx_zero(val: f64) -> bool {
     val.abs() < 1e-6
 }
@@ -212,4 +254,3 @@ fn execute<F: Future<Output = ()> + Send + 'static>(f: F) {
 fn execute<F: Future<Output = ()> + 'static>(f: F) {
     wasm_bindgen_futures::spawn_local(f);
 }
-
