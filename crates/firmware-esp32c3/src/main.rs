@@ -29,6 +29,50 @@ pub struct Config {
     wifi_psk: &'static str,
 }
 
+pub struct Movement {
+    vectors: Vec<i32>, // Reduced vectors for each axis
+    cycles: i32,       // Number of cycles to repeat
+}
+
+pub struct MotionPlanner {
+    movements: Vec<Movement>,
+    // Other fields as needed
+}
+
+impl MotionPlanner {
+    pub fn new() -> Self {
+        Self {
+            movements: Vec::new(),
+            // Initialize other fields
+        }
+    }
+
+    pub fn plan_movement(&mut self, vectors: Vec<i32>) {
+        // Calculate the greatest common divisor
+        let gcd = gcd(&vectors);
+
+        // Divide each vector by the greatest common divisor to get reduced vectors
+        let reduced_vectors: Vec<i32> = vectors.into_iter().map(|v| v / gcd).collect();
+
+        // Push the movement into the buffer
+        let movement = Movement {
+            vectors: reduced_vectors,
+            cycles: gcd,
+        };
+        self.movements.push(movement);
+    }
+
+    pub fn next_movement(&mut self) -> Option<Movement> {
+        self.movements.pop()
+    }
+}
+
+fn gcd(numbers: &[i32]) -> i32 {
+    // Function to calculate the greatest common divisor of the vectors
+
+    0
+}
+
 fn main() -> Result<()> {
     esp_idf_sys::link_patches();
     esp_idf_svc::log::EspLogger::initialize_default();
