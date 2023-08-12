@@ -76,6 +76,7 @@ impl super::View for Toolpath {
         let ui_toolpath_grow = ui.button("Grow").on_hover_text("Grow the toolpath by 5mm");
         let ui_toolpath_status_on = ui.button("On").on_hover_text("Turn the status light on");
         let ui_toolpath_status_off = ui.button("Off").on_hover_text("Turn the status light off");
+        let ui_toolpath_send = ui.button("Send").on_hover_text("Send geometry to the machine");
 
         let cad_file_arc = Arc::clone(&self.cad_file);
 
@@ -107,6 +108,12 @@ impl super::View for Toolpath {
 
         if ui_toolpath_status_off.clicked() {
             execute(status_off());
+        }
+
+        if ui_toolpath_send.clicked() {
+            for point in &self.points_to_plot {
+                execute(send_geometry( point[0], point[1], 0.0, 0.0, 100.0));
+            }
         }
 
         if ui_open_file.clicked() {
@@ -198,14 +205,6 @@ impl super::View for Toolpath {
                         _ => (),
                     }
                 }
-
-                //if let Some(application_log) = self.state.demo.demo_windows.get_application_log() {
-                //    application_log.add_entry(format!("{:#?}", bounding_box));
-                //    application_log.add_entry(format!("{:#?}", self.points_to_plot));
-                //}
-
-                //super::application_log::ApplicationLog::add_entry(format!("{:#?}", bounding_box));
-                //super::application_log::ApplicationLog::add_entry(format!("{:#?}", self.points_to_plot));
                 println!("{:#?}", bounding_box);
                 println!("{:#?}", self.points_to_plot);
             }
@@ -231,6 +230,18 @@ async fn status_off() -> () {
 
     // Define the plain text data to send (adjust as needed)
     let data = "status_off";
+
+    // Make the POST request
+    let client = reqwest::Client::new();
+    let response = client.post(url).body(data).send().await;
+}
+
+async fn send_geometry(x: f64, y: f64, z: f64, e: f64, f: f64) -> () {
+    // Replace with your actual endpoint
+    let url = "http://alumina/";
+
+    // Define the plain text data to send (adjust as needed)
+    let data = format!("G0 X{} Y{} Z{} E{} F{}", x, y, z, e, f);
 
     // Make the POST request
     let client = reqwest::Client::new();
