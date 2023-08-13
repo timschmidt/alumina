@@ -7,12 +7,12 @@ use kiss3d::window::{State, Window};
 use kiss3d::nalgebra::{UnitQuaternion, Vector3};
 
 #[derive(PartialEq, Default, Debug)]
-pub struct Mesh {
+pub struct Cad {
     c: SceneNode,
     rot: UnitQuaternion<f32>,
 }
 
-impl super::Demo for Mesh {
+impl super::Demo for Cad {
     fn name(&self) -> &'static str {
         "🗠 Mesh"
     }
@@ -27,7 +27,7 @@ impl super::Demo for Mesh {
     }
 }
 
-impl super::View for Mesh {
+impl super::View for Cad {
     #[allow(clippy::unused_self)]
     fn ui(&mut self, ui: &mut Ui) {
 
@@ -35,7 +35,7 @@ impl super::View for Mesh {
     }
 }
 
-impl State for Mesh {
+impl State for Cad {
     fn step(&mut self, _: &mut Window) {
         self.c.prepend_to_local_rotation(&self.rot)
     }

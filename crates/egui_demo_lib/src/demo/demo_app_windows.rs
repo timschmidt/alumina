@@ -21,12 +21,14 @@ impl Default for Demos {
     fn default() -> Self {
         Self::from_demos(vec![
             Box::<super::paint_bezier::PaintBezier>::default(),
+            //Box::<super::cad::Cad>::default(),
             Box::<super::code_editor::CodeEditor>::default(),
             Box::<super::code_example::CodeExample>::default(),
             Box::<super::context_menu::ContextMenus>::default(),
             Box::<super::dancing_strings::DancingStrings>::default(),
             Box::<super::drag_and_drop::DragAndDropDemo>::default(),
             Box::<super::font_book::FontBook>::default(),
+            //Box::<super::images::Images>::default(),
             Box::<super::MiscDemoWindow>::default(),
             Box::<super::multi_touch::MultiTouch>::default(),
             Box::<super::painting::Painting>::default(),
@@ -37,6 +39,7 @@ impl Default for Demos {
             Box::<super::table_demo::TableDemo>::default(),
             Box::<super::text_edit::TextEdit>::default(),
             Box::<super::toolpath::Toolpath>::default(),
+            //Box::<super::voxels::Voxels>::default(),
             Box::<super::widget_gallery::WidgetGallery>::default(),
             Box::<super::window_options::WindowOptions>::default(),
             Box::<super::tests::WindowResizeTest>::default(),

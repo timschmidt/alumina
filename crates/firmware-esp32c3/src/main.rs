@@ -49,17 +49,17 @@ impl MotionPlanner {
 
     pub fn plan_movement(&mut self, vectors: Vec<i32>) {
         // Calculate the greatest common divisor
-        let gcd = gcd(&vectors);
+        let gcd = vec_gcd(&vectors);
 
         // Divide each vector by the greatest common divisor to get reduced vectors
-        let reduced_vectors: Vec<i32> = vectors.into_iter().map(|v| v / gcd).collect();
+        //let reduced_vectors: Vec<i32> = vectors.into_iter().map(|v| v / gcd).collect();
 
         // Push the movement into the buffer
-        let movement = Movement {
-            vectors: reduced_vectors,
-            cycles: gcd,
-        };
-        self.movements.push(movement);
+        //let movement = Movement {
+        //    vectors: reduced_vectors,
+        //    cycles: gcd,
+        //};
+        //self.movements.push(movement);
     }
 
     pub fn next_movement(&mut self) -> Option<Movement> {
@@ -67,9 +67,9 @@ impl MotionPlanner {
     }
 }
 
-fn gcd(numbers: &[i32]) -> i32 {
+fn vec_gcd(numbers: &[i32]) -> i32 {
     // Function to calculate the greatest common divisor of the vectors
-
+    //numbers.iter().fold(numbers[0], |acc, &x| gcd(acc, x))
     0
 }
 

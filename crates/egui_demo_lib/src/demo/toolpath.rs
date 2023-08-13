@@ -13,6 +13,7 @@ use std::process::exit;
 use svg2polylines::{self, Polyline};
 use zip;
 use std::sync::{Arc, Mutex};
+use url::{Url, Host, Position};
 
 use crate::demo::Demo;
 
@@ -77,6 +78,7 @@ impl super::View for Toolpath {
         let ui_toolpath_status_on = ui.button("On").on_hover_text("Turn the status light on");
         let ui_toolpath_status_off = ui.button("Off").on_hover_text("Turn the status light off");
         let ui_toolpath_send = ui.button("Send").on_hover_text("Send geometry to the machine");
+        let ui_toolpath_plan = ui.button("Plan").on_hover_text("Plan toolpath and display it");
 
         let cad_file_arc = Arc::clone(&self.cad_file);
 
