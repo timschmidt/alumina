@@ -16,7 +16,7 @@ Todo:
 - [ ] get image memory mapped UI working for image / voxel
 - [ ] get kiss3d UI and render working for CAD
 - [ ] implement ramp_maker in firmware from https://github.com/braun-embedded/ramp-maker/blob/main/examples/basic.rs
-
+- [ ] implement wifi AP mode, and pull credentials into main.rs based on https://github.com/esp-rs/esp-idf-svc/blob/master/examples/json_post_handler.rs
 
 ## Goals:
 - Easy setup
@@ -120,9 +120,6 @@ follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-
 - [coordinate transformations](https://en.wikipedia.org/wiki/List_of_common_coordinate_transformations)
     - https://github.com/DaveKram/coord_transforms
 ### Components
-- graphical user interface
-    - https://github.com/emilk/egui
-    - https://www.egui.rs/#demo
 - timer
     - https://github.com/etrombly/bluepill/blob/master/examples/stepper_tasks.rs
 - analog to digital converter
@@ -148,25 +145,6 @@ follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-
 - ENC28J60
     - https://crates.io/crates/enc28j60
     - http://blog.japaric.io/wd-4-enc28j60/
-- [STM32F103R](https://www.st.com/resource/en/datasheet/stm32f103ve.pdf), [errata](https://www.st.com/resource/en/errata_sheet/es0340-stm32f101xcde-stm32f103xcde-device-errata-stmicroelectronics.pdf), [reference manual](https://www.st.com/resource/en/reference_manual/cd00171190-stm32f101xx-stm32f102xx-stm32f103xx-stm32f105xx-and-stm32f107xx-advanced-arm-based-32-bit-mcus-stmicroelectronics.pdf)
-    - https://crates.io/crates/stm32f0xx-hal
-    - https://github.com/stm32-rs/stm32f1xx-hal
-    - https://crates.io/crates/stm32g0xx-hal
-    - https://crates.io/crates/stm32-hal2
-- STM32F446
-    - https://crates.io/crates/stm32f407g-disc
-    - https://crates.io/crates/stm32f429i-disc
-    - https://crates.io/crates/stm32f4xx-hal
-- GD32
-    - https://github.com/riscv-rust/gd32vf103xx-hal
-    - https://github.com/gd32v-rust/gd32vf103-hal
-    - https://crates.io/crates/gd32f1x0-hal
-- [Raspberry Pi Pico](https://datasheets.raspberrypi.com/picow/pico-w-datasheet.pdf)
-    - https://crates.io/crates/rp2040-hal
-    - https://github.com/rp-rs/rp-hal
-    - https://rustrepo.com/repo/rp-rs-rp2040-project-template-rust-miscellaneous
-- LPC1768/9
-    - https://crates.io/crates/lpc1769
 - ESP32
     - https://github.com/esp-rs/rust
     - https://github.com/esp-rs/esp-idf-hal

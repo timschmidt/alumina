@@ -1,5 +1,5 @@
 use egui::*;
-use rfd::FileDialog;
+use rfd::AsyncFileDialog;
 use std::fs;
 use std::ffi::OsStr;
 use std::io::{BufReader, Read, Write};
@@ -14,7 +14,7 @@ use egui::{CentralPanel, Frame, Ui};
 
 #[derive(PartialEq, Default, Debug)]
 pub struct Images {
-    points_to_plot: Vec<[f64; 2]>
+    image_file:  Arc<Mutex<Vec<u8>>>,
 }
 
 impl super::Demo for Images {
@@ -34,9 +34,29 @@ impl super::Demo for Images {
 
 impl super::View for Images {
     #[allow(clippy::unused_self)]
-        fn ui(&mut self, ui: &mut Ui) {
-            let ui_open_file = ui.button("Open file").on_hover_text("PNG, QOI, and ZIP are supported");
-            if ui_open_file.clicked(){
+    fn ui(&mut self, ui: &mut Ui) {
+        let ui_open_file = ui.button("Open file").on_hover_text("PNG, QOI, and ZIP are supported");
+
+        let filepicker_future = async move {
+            let filepicker = AsyncFileDialog::new()
+                .add_filter(
+                    "Cut files (zip, gcode, nc, ngc, svg, dxf)",
+                    &["zip", "gcode", "nc", "ngc", "svg", "dxf"],
+                )
+                .pick_file()
+                .await
+                .expect("no file has been selected");
+
+            let mut cad_file = cad_file_arc.lock().unwrap();
+            *cad_file = filepicker.read().await;
+        };
+
+        if ui_open_file.clicked() {
+            execute(filepicker_future);
+        }
+
+        if let Ok(image_file_lock) = self.image_file.lock() {
+            if !image_file_lock.is_empty() {
                 let mut file = FileDialog::new()
                     .add_filter("Voxel files (zip, png, qoi)", &["zip", "png", "qoi"])
                     .pick_file();
@@ -57,23 +77,32 @@ impl super::View for Images {
                             //let texture_id = ctx.texture_manager().insert(egui_texture);
                         }
                         if path.extension().unwrap() == OsStr::new("qoi") { // Open an qoi file
-
                         }
                         if path.extension().unwrap() == OsStr::new("zip") { // Open an zip file
-
                         }
                     },
-                    None    => println!("Please select a file"),
+                    None => println!("Please select a file"),
                 }
             }
 
-        fn show_image(ui: &mut Ui, texture_id: TextureId) {
-            //CentralPanel::default().show(ui, |ui| {
-            //    let image = egui::Image::new(texture_id, [300.0, 300.0]); // Set the desired size
-            //    Frame::dark_canvas(ui.style()).show(ui, |ui| {
-            //        ui.add(image);
-            //    });
-            //});
+            fn show_image(ui: &mut Ui, texture_id: TextureId) {
+                //CentralPanel::default().show(ui, |ui| {
+                //    let image = egui::Image::new(texture_id, [300.0, 300.0]); // Set the desired size
+                //    Frame::dark_canvas(ui.style()).show(ui, |ui| {
+                //        ui.add(image);
+                //    });
+                //});
+            }
         }
     }
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+fn execute<F: Future<Output = ()> + Send + 'static>(f: F) {
+    // this is stupid... use any executor of your choice instead
+    std::thread::spawn(move || futures::executor::block_on(f));
+}
+#[cfg(target_arch = "wasm32")]
+fn execute<F: Future<Output = ()> + 'static>(f: F) {
+    wasm_bindgen_futures::spawn_local(f);
 }
