@@ -39,6 +39,104 @@ pub struct MotionPlanner {
     // Other fields as needed
 }
 
+use std::collections::HashMap;
+
+pub enum MotorType {
+    Stepper { step_angle: f32, gear_ratio: f32 },
+    Servo { max_speed: f32, torque: f32 },
+}
+
+pub enum ToolType {
+    Extruder { temp_sensor: TemperatureSensor, material: String },
+    Laser { power: f32, max_power: f32, min_power: f32, pulse_duration: u32, pulses_per_pm: f32, mode: String},
+    PlasmaCutter { power: f32, max_power: f32, min_power: f32, pierce_delay: f32, cut_height: f32, hop_distance: f32, gas_type: String },
+    Mill { spindle_speed: f32, max_spindle_speed: f32, min_spindle_speed: f32, direction: String, material: String },
+    Heater { temp_sensor: TemperatureSensor, temperature: f32, max_temp: f32, min_temp: f32 },
+}
+
+pub struct Axis {
+    motor_type: MotorType,
+    endstops: HashMap<String, Endstop>,
+    axis_position: f32, // Machine Coordinate
+}
+
+pub struct Endstop {
+    start: bool,
+    end: bool,
+    pin: u32,
+    inverted: bool,
+    pullup: bool,
+}
+
+pub struct TemperatureSensor {
+    current_temperature: f32,
+    target_temperature: f32,
+}
+
+pub struct Camera {
+    resolution: (u32, u32),
+    fps: u32,
+}
+
+pub struct CNCMachineState {
+    pub axes: HashMap<String, Axis>, // up to 12 axes
+    pub toolheads: HashMap<String, ToolType>, // multiple toolheads
+    pub workpiece_coordinates: (f32, f32, f32), // Workpiece coordinates
+    pub sensors: HashMap<String, Sensor>,
+    pub peripherals: HashMap<String, Peripheral>,
+    pub pendant: Pendant,
+    pub endstops: HashMap<String, Endstop>,
+    pub fan_speed: f64,
+    pub feedrate: f64,
+    pub relative_mode: bool,
+}
+
+pub enum Sensor {
+    ToolHeight { height: f32 },
+    Temperature(TemperatureSensor),
+    Camera(Camera),
+    CoolantFlow { rate: f32 },
+    AirFlow { speed: f32 },
+}
+
+pub enum Peripheral {
+    Status(String),
+    Activation(String),
+    Deactivation(String),
+}
+
+pub struct Pendant {
+    connected: bool,
+    command: Option<PendantCommand>,
+}
+
+pub enum PendantCommand {
+    Move { axis: String, distance: f32 },
+    Stop,
+    // other commands as needed
+}
+
+impl CNCMachineState {
+    pub fn new() -> Self {
+        Self {
+            // Initialize state
+            axes: HashMap::new(),
+            toolheads: HashMap::new(),
+            workpiece_coordinates: (0.0, 0.0, 0.0),
+            sensors: HashMap::new(),
+            peripherals: HashMap::new(),
+            pendant: Pendant {
+                connected: false,
+                command: None,
+            },
+            endstops: HashMap::new(),
+            fan_speed: 0.0,
+            feedrate: 0.0,
+            relative_mode: false,
+        }
+    }
+}
+
 impl MotionPlanner {
     pub fn new() -> Self {
         Self {

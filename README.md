@@ -17,6 +17,7 @@ Todo:
 - [ ] get kiss3d UI and render working for CAD
 - [ ] implement ramp_maker in firmware from https://github.com/braun-embedded/ramp-maker/blob/main/examples/basic.rs
 - [ ] implement wifi AP mode, and pull credentials into main.rs based on https://github.com/esp-rs/esp-idf-svc/blob/master/examples/json_post_handler.rs
+- [ ] simplify and cargo-ize build system
 
 ## Goals:
 - Easy setup
