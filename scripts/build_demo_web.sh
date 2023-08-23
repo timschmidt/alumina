@@ -121,9 +121,10 @@ if [[ "${OPEN}" == true ]]; then
   fi
 fi
 
-gzip --best --force --keep "${FINAL_WASM_PATH}"
+#gzip --best --force --keep "${FINAL_WASM_PATH}"
 gzip --best --force --keep docs/${OUT_FILE_NAME}.js
 gzip --best --force --keep docs/${OUT_FILE_NAME}.html
+zstd --force --ultra -22 --keep "${FINAL_WASM_PATH}"
 
 echo "Building firmware..."
 # if we don't clear RUSTFLAGS, we run into https://github.com/esp-rs/embuild/issues/16
