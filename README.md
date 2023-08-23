@@ -18,8 +18,9 @@ Todo:
 - [ ] implement ramp_maker in firmware from https://github.com/braun-embedded/ramp-maker/blob/main/examples/basic.rs
 - [ ] implement wifi AP mode, and pull credentials into main.rs based on https://github.com/esp-rs/esp-idf-svc/blob/master/examples/json_post_handler.rs
 - [ ] simplify and cargo-ize build system
-- [ ] implement https://github.com/101arrowz/fzstd as polyfill for wasm compression
+- [x] implement https://github.com/101arrowz/fzstd as polyfill for wasm compression
 - [ ] https://github.com/rustwasm/wasm-bindgen/pull/2000 WebXR bindings for WASM
+- [ ] implement ETag / if-none-match for wasm based on build ( https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#etagif-none-match )
 
 ## Goals:
 - Easy setup
