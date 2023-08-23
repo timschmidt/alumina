@@ -21,6 +21,7 @@ Todo:
 - [x] implement https://github.com/101arrowz/fzstd as polyfill for wasm compression
 - [ ] https://github.com/rustwasm/wasm-bindgen/pull/2000 WebXR bindings for WASM
 - [ ] implement ETag / if-none-match for wasm based on build ( https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#etagif-none-match )
+- [ ] enable https in firmware / UI with pinned cert, maybe still load UI via HTTP
 
 ## Goals:
 - Easy setup
