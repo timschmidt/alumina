@@ -4,19 +4,22 @@ use embedded_svc::{http::Method, http::Headers, io::Write};
 use esp_idf_hal::{
     i2c::{I2cConfig, I2cDriver},
     prelude::*,
+    gpio::OutputPin
 };
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
     http::server::{Configuration, EspHttpServer},
+    tls::X509,
 };
 use shtcx::{self, shtc3, PowerMode};
 use std::{
     sync::{Arc, Mutex},
     thread::sleep,
     time::Duration,
+    collections::HashMap,
+    ffi::CStr,
 };
 use embedded_svc::io::Read;
-use esp_idf_hal::gpio::OutputPin;
 use wifi::wifi;
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
@@ -38,8 +41,6 @@ pub struct MotionPlanner {
     movements: Vec<Movement>,
     // Other fields as needed
 }
-
-use std::collections::HashMap;
 
 pub enum MotorType {
     Stepper { step_angle: f32, gear_ratio: f32 },
@@ -209,7 +210,12 @@ fn main() -> Result<()> {
      */
 
     // 1.Create a `EspHttpServer` instance using a default configuration
-    let mut server = EspHttpServer::new(&Default::default())?;
+    let mut webserver_configuration: Configuration = Default::default();
+    //webserver_configuration.server_certificate = Some(X509::pem(CStr::from_bytes_with_nul(include_bytes!("../public.pem")).unwrap()));
+    //webserver_configuration.private_key = Some(X509::pem(CStr::from_bytes_with_nul(include_bytes!("../private.pem")).unwrap()));
+
+    //let mut server = EspHttpServer::new(&Default::default())?;
+    let mut server = EspHttpServer::new(&webserver_configuration)?;
 
     // 2. Write a handler that returns the index page
     server.fn_handler("/", Method::Get, |request| {
@@ -221,6 +227,12 @@ fn main() -> Result<()> {
     server.fn_handler("/index.js", Method::Get, |request| {
         let response = request.into_response(200, Some("OK"), &[("Content-Type", "text/javascript"), ("Content-Encoding", "gzip")]);
         response?.write_all(include_bytes!("../../../docs/index.js.gz"))?;
+        Ok(())
+    })?;
+
+    server.fn_handler("/zstd.js", Method::Get, |request| {
+        let response = request.into_response(200, Some("OK"), &[("Content-Type", "text/javascript"), ("Content-Encoding", "gzip")]);
+        response?.write_all(include_bytes!("../../../docs/zstd.js.gz"))?;
         Ok(())
     })?;
 

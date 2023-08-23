@@ -19,6 +19,7 @@ exclude = [
     "crates/firmware-esp32c3",
     "crates/firmware-stm32f4xx",
     "crates/implicit3d",
+    "crates/vr-ui",
     "crates/bbox",
 ]
 
