@@ -3,7 +3,8 @@ target = "riscv32imc-esp-espidf"
 
 [target.riscv32imc-esp-espidf]
 linker = "ldproxy"
-runner = "espflash -s 16MB --partition-table partitions.csv --use-stub --monitor"
+runner = "espflash flash" # espflash v2.0 or later
+#runner = "espflash -s 16MB --partition-table partitions.csv --use-stub --monitor" # espflash v1.7.x
 # Future - necessary for the experimental "native build" of esp-idf-sys with ESP32C3
 # See also https://github.com/ivmarkov/embuild/issues/16
 rustflags = ["-C", "default-linker-libraries"]

@@ -255,12 +255,12 @@ impl DemoWindows {
 
                 use egui::special_emojis::{GITHUB, TWITTER};
                 ui.hyperlink_to(
-                    format!("{} egui on GitHub", GITHUB),
-                    "https://github.com/emilk/egui",
+                    format!("{} alumina on GitHub", GITHUB),
+                    "https://github.com/timschmidt/alumina",
                 );
                 ui.hyperlink_to(
-                    format!("{} @ernerfeldt", TWITTER),
-                    "https://twitter.com/ernerfeldt",
+                    format!("{} @timschmidt", TWITTER),
+                    "https://twitter.com/gridbeamtim",
                 );
 
                 ui.separator();

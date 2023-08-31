@@ -28,7 +28,7 @@ fn main() -> Result<(), eframe::Error> {
         ..Default::default()
     };
     eframe::run_native(
-        "egui demo app",
+        "alumina",
         options,
         Box::new(|cc| Box::new(alumina_app::WrapApp::new(cc))),
     )
