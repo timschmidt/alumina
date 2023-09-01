@@ -1861,7 +1861,7 @@ function initSync(module) {
         if (wasm !== undefined) return wasm;
 
         if (typeof input === 'undefined' && script_src !== 'undefined') {
-            input = script_src.replace(/\.js$/, '_bg.zst'); // Update extension to fetch compressed file
+            input = script_src.replace(/\.js$/, '_bg.wasm.zst'); // Update extension to fetch compressed file
         }
 
         const imports = __wbg_get_imports();

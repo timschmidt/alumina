@@ -1,0 +1,32 @@
+--- <index.js>
++++ <index.js>
+@@ -18,17 +18,25 @@
+     if (wasm !== undefined) return wasm;
+ 
+     if (typeof input === 'undefined' && script_src !== 'undefined') {
+-        input = script_src.replace(/\.js$/, '_bg.wasm');
++        input = script_src.replace(/\.js$/, '_bg.wasm.zst'); // Update extension to fetch compressed file
+     }
+     const imports = __wbg_get_imports();
+ 
+     if (typeof input === 'string' || (typeof Request === 'function' && input instanceof Request) || (typeof URL === 'function' && input instanceof URL)) {
+-        input = fetch(input);
++        input = fetch(input).then(res => res.arrayBuffer());
+     }
+ 
+     __wbg_init_memory(imports);
+ 
+-    const { instance, module } = await __wbg_load(await input, imports);
++    // Decompress the buffer using zstd.js
++    const compressedBuf = await input;
++    const compressed = new Uint8Array(compressedBuf);
++    const decompressed = fzstd.decompress(compressed);
++
++     // Convert the decompressed buffer into a WASM module
++    const module = new WebAssembly.Module(decompressed);
++
++    const instance = new WebAssembly.Instance(module, imports);
+ 
+     return __wbg_finalize_init(instance, module);
+ }
+

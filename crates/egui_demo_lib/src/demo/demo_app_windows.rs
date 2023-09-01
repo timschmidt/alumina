@@ -28,7 +28,7 @@ impl Default for Demos {
             Box::<super::dancing_strings::DancingStrings>::default(),
             Box::<super::drag_and_drop::DragAndDropDemo>::default(),
             Box::<super::font_book::FontBook>::default(),
-            //Box::<super::images::Images>::default(),
+            Box::<super::images::Images>::default(),
             Box::<super::MiscDemoWindow>::default(),
             Box::<super::multi_touch::MultiTouch>::default(),
             Box::<super::painting::Painting>::default(),
