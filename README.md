@@ -3,25 +3,32 @@
 Todo:
 - [ ] read boot button as input and display status
 - [ ] parse self.url and use host portion to address microcontroller instead of hard coded uri
-- [ ] calculate gcd in ui and firmware
+- [ ] calculate gcd in ui and firmware planners
 - [ ] generate steps in stepper driver interrupt handler on micro
+- [ ] implement queue between planner and stepper driver interrupt handler
 - [ ] implement rate limiting in UI for geometry send
-- [ ] implement SD support
-- [ ] browse SD over HTTP
-- [ ] UI for browsing SD
+- [ ] implement SD support in firmware
+- [ ] FAT / exFAT support for SD cards in firmware
+- [ ] browse SD over HTTP in firmware
+- [ ] UI for browsing SD in GUI
 - [ ] read and display ADC values from micro
 - [ ] read and display timer from micro
 - [ ] read http headers, especially accept-encoding and content-length and others.
 - [ ] integrate arcfinder
-- [ ] get image memory mapped UI working for image / voxel
-- [ ] get kiss3d UI and render working for CAD
+- [x] get 2D image viewer based on a bitmapped memory region working in GUI
+- [ ] get 3d viewer module based on kiss3d / miniquad working for CAD
 - [ ] implement ramp_maker in firmware from https://github.com/braun-embedded/ramp-maker/blob/main/examples/basic.rs
+- [ ] implement setup mode, listening for esp direct communication of setup parameters and state machine around when to enable / disable setup mode
 - [ ] implement wifi AP mode, and pull credentials into main.rs based on https://github.com/esp-rs/esp-idf-svc/blob/master/examples/json_post_handler.rs
 - [ ] simplify and cargo-ize build system
 - [x] implement https://github.com/101arrowz/fzstd as polyfill for wasm compression
 - [ ] https://github.com/rustwasm/wasm-bindgen/pull/2000 WebXR bindings for WASM
 - [ ] implement ETag / if-none-match for wasm based on build ( https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#etagif-none-match )
 - [ ] enable https in firmware / UI with pinned cert, maybe still load UI via HTTP
+- [ ] implement relay board support
+- [ ] implement single axis board support
+- [ ] implement 4 axis board support
+- [ ] implement 4 axis c-6 board support
 
 ## Goals:
 - Easy setup
