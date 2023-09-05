@@ -29,6 +29,15 @@ Todo:
 - [ ] implement single axis board support
 - [ ] implement 4 axis board support
 - [ ] implement 4 axis c-6 board support
+- [ ] implement endstop support
+- [ ] store cryptographic key using wasm-cookies crate
+- [ ] implement mppt algorithm in firmware
+- [ ] implement topleveling algorithm in firmware
+- [ ] include charge curves for common chemistries
+- [ ] run flamegraphs on UI and firmware, and add to automated tests
+- [ ] fix github CI
+- [ ] implement tree control for CAD window
+- [ ] implement add / remove buttons for CAD tree control
 
 ## Goals:
 - Easy setup
