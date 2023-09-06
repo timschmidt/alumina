@@ -1,0 +1,10 @@
+--- <index.html>
++++ <index.html>
+@@ -104,6 +104,7 @@
+         <div class="lds-dual-ring"></div>
+     </div>
+ 
++    <script src="zstd.js"></script>
+     <script>
+         // The `--no-modules`-generated JS from `wasm-bindgen` attempts to use
+         // `WebAssembly.instantiateStreaming` to instantiate the wasm module,

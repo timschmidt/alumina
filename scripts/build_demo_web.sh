@@ -121,8 +121,9 @@ if [[ "${OPEN}" == true ]]; then
   fi
 fi
 
-patch -i docs/index.js.patch docs/index.js
-patch -i docs/index.html.patch docs/index.html
+# ||: causes the patch command to always return 0 exit status, even when patches have already been applied
+patch --forward -i docs/index.js.patch docs/index.js ||:
+patch --forward -i docs/index.html.patch docs/index.html ||:
 
 gzip --best --force --keep "${FINAL_WASM_PATH}"
 gzip --best --force --keep docs/${OUT_FILE_NAME}.js
