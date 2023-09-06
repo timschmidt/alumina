@@ -140,6 +140,12 @@ follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-
     - [marching squares](https://crates.io/crates/marching-squares) creates contour lines from a heightmap of Vec\<Vec\<i16\>\>
 - [coordinate transformations](https://en.wikipedia.org/wiki/List_of_common_coordinate_transformations)
     - https://github.com/DaveKram/coord_transforms
+- Solvespace's geometric solver is basically these files:
+    - https://github.com/solvespace/solvespace/blob/master/src/expr.cpp
+    - https://github.com/solvespace/solvespace/blob/master/src/constraint.cpp
+    - https://github.com/solvespace/solvespace/blob/master/src/constrainteq.cpp
+    - https://github.com/solvespace/solvespace/blob/master/src/system.cpp
+
 ### Components
 - timer
     - https://github.com/etrombly/bluepill/blob/master/examples/stepper_tasks.rs
