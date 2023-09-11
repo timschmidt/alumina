@@ -1,5 +1,4 @@
 use egui::*;
-use rfd::FileDialog;
 use std::fs;
 use std::ffi::OsStr;
 use std::io::{BufReader, Read, Write};
