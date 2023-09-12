@@ -20,7 +20,7 @@ pub struct Controls {
 
 impl super::Demo for Controls {
     fn name(&self) -> &'static str {
-        "🗠 Controls"
+        "🗠 Jog controls"
     }
 
     fn show(&mut self, ctx: &Context, open: &mut bool) {

@@ -10,6 +10,7 @@ use image::DynamicImage;
 use std::io::Cursor;
 use std::future::Future;
 use egui::TextureId;
+use egui_extras::RetainedImage;
 use egui::{CentralPanel, Frame, Ui};
 use std::sync::{Arc, Mutex};
 
@@ -20,7 +21,7 @@ pub struct Images {
 
 impl super::Demo for Images {
     fn name(&self) -> &'static str {
-        "🗠 2D"
+        "🗠 2D bitmap view"
     }
 
     fn show(&mut self, ctx: &Context, open: &mut bool) {
@@ -69,9 +70,9 @@ impl super::View for Images {
                 };
 
                 // Create the egui texture
+                let retained_image = RetainedImage::from_image_bytes("image name", &image).ok();
                 //let egui_texture = egui::Texture::new(image.width(), image.height(), image.into_raw(), egui::TextureFormat::RgbaPremul);
                 //let texture_id = ctx.texture_manager().insert(egui_texture);
-                //ui.image(texture_id, [image.width() as f32, image.height() as f32]);
             }
 
             fn show_image(ui: &mut Ui, texture_id: TextureId) {

@@ -42,7 +42,7 @@ impl Toolpath {
 
 impl super::Demo for Toolpath {
     fn name(&self) -> &'static str {
-        "🗠 2.5D"
+        "🗠 2D vector view"
     }
 
     fn show(&mut self, ctx: &Context, open: &mut bool) {

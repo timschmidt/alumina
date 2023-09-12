@@ -6,9 +6,11 @@
 
 pub mod images;
 pub mod toolpath;
-pub mod controls;
-
 //pub mod cad;
+//pub mod voxels;
+//pub mod esp32c3;
+//pub mod esp32c6;
+pub mod controls;
 pub mod about;
 //pub mod cad;
 pub mod code_editor;

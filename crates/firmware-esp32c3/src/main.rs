@@ -228,7 +228,7 @@ fn main() -> Result<()> {
     server.fn_handler("/index.js", Method::Get, |request| {
         let response = request.into_response(200, Some("OK"), &[("Content-Type", "text/javascript"), ("Content-Encoding", "gzip")]);
         //response?.write_all(include_bytes!("../../../docs/index.js.gz"))?;
-        response?.write_all(include_bytes!("../../../docs/index.js.gz"))?;
+        response?.write_all(include_bytes!("../../../docs/index.js.min.gz"))?;
         Ok(())
     })?;
 
