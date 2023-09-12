@@ -175,7 +175,7 @@ impl WrapApp {
     fn apps_iter_mut(&mut self) -> impl Iterator<Item = (&str, Anchor, &mut dyn eframe::App)> {
         let mut vec = vec![
             (
-                "✨ Demos",
+                "✨ Alumina",
                 Anchor::Demo,
                 &mut self.state.demo as &mut dyn eframe::App,
             ),

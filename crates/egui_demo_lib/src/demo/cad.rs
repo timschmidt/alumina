@@ -21,7 +21,7 @@ impl Default for Cad {
 
 impl super::Demo for Cad {
     fn name(&self) -> &'static str {
-        "🗠 Mesh"
+        "🗠 3D"
     }
 
     fn show(&mut self, ctx: &Context, open: &mut bool) {

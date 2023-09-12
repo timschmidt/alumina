@@ -20,7 +20,7 @@ pub struct Images {
 
 impl super::Demo for Images {
     fn name(&self) -> &'static str {
-        "🗠 Images"
+        "🗠 2D"
     }
 
     fn show(&mut self, ctx: &Context, open: &mut bool) {
@@ -71,6 +71,7 @@ impl super::View for Images {
                 // Create the egui texture
                 //let egui_texture = egui::Texture::new(image.width(), image.height(), image.into_raw(), egui::TextureFormat::RgbaPremul);
                 //let texture_id = ctx.texture_manager().insert(egui_texture);
+                //ui.image(texture_id, [image.width() as f32, image.height() as f32]);
             }
 
             fn show_image(ui: &mut Ui, texture_id: TextureId) {

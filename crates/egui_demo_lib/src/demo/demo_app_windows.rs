@@ -13,23 +13,23 @@ use crate::is_mobile;
 struct Demos {
     #[cfg_attr(feature = "serde", serde(skip))]
     demos: Vec<Box<dyn Demo>>,
-
     open: BTreeSet<String>,
 }
 
 impl Default for Demos {
     fn default() -> Self {
         Self::from_demos(vec![
+            Box::<super::images::Images>::default(),
+            Box::<super::toolpath::Toolpath>::default(),
+            Box::<super::controls::Controls>::default(),
             Box::<super::paint_bezier::PaintBezier>::default(),
             //Box::<super::cad::Cad>::default(),
             Box::<super::code_editor::CodeEditor>::default(),
             Box::<super::code_example::CodeExample>::default(),
             Box::<super::context_menu::ContextMenus>::default(),
-            Box::<super::controls::Controls>::default(),
             Box::<super::dancing_strings::DancingStrings>::default(),
             Box::<super::drag_and_drop::DragAndDropDemo>::default(),
             Box::<super::font_book::FontBook>::default(),
-            Box::<super::images::Images>::default(),
             Box::<super::MiscDemoWindow>::default(),
             Box::<super::multi_touch::MultiTouch>::default(),
             Box::<super::painting::Painting>::default(),
@@ -39,7 +39,6 @@ impl Default for Demos {
             Box::<super::strip_demo::StripDemo>::default(),
             Box::<super::table_demo::TableDemo>::default(),
             Box::<super::text_edit::TextEdit>::default(),
-            Box::<super::toolpath::Toolpath>::default(),
             //Box::<super::voxels::Voxels>::default(),
             Box::<super::widget_gallery::WidgetGallery>::default(),
             Box::<super::window_options::WindowOptions>::default(),
@@ -87,7 +86,6 @@ impl Demos {
 struct Tests {
     #[cfg_attr(feature = "serde", serde(skip))]
     demos: Vec<Box<dyn Demo>>,
-
     open: BTreeSet<String>,
 }
 
@@ -200,7 +198,7 @@ impl DemoWindows {
                     ui.add_space(12.0);
                     ui.vertical_centered_justified(|ui| {
                         if ui
-                            .button(egui::RichText::new("Continue to the demo!").size(20.0))
+                            .button(egui::RichText::new("Continue to the Alumina user interface").size(20.0))
                             .clicked()
                         {
                             close = true;
@@ -219,7 +217,7 @@ impl DemoWindows {
             egui::menu::bar(ui, |ui| {
                 let font_size = 16.5;
 
-                ui.menu_button(egui::RichText::new("⏷ demos").size(font_size), |ui| {
+                ui.menu_button(egui::RichText::new("⏷ modules").size(font_size), |ui| {
                     ui.set_style(ui.ctx().style()); // ignore the "menu" style set by `menu_button`.
                     self.demo_list_ui(ui);
                     if ui.ui_contains_pointer() && ui.input(|i| i.pointer.any_click()) {
@@ -231,11 +229,11 @@ impl DemoWindows {
                     use egui::special_emojis::{GITHUB, TWITTER};
                     ui.hyperlink_to(
                         egui::RichText::new(TWITTER).size(font_size),
-                        "https://twitter.com/ernerfeldt",
+                        "https://twitter.com/timschmidt",
                     );
                     ui.hyperlink_to(
                         egui::RichText::new(GITHUB).size(font_size),
-                        "https://github.com/emilk/egui",
+                        "https://github.com/timschmidt/alumina",
                     );
                 });
             });
@@ -249,14 +247,14 @@ impl DemoWindows {
             .show(ctx, |ui| {
                 egui::trace!(ui);
                 ui.vertical_centered(|ui| {
-                    ui.heading("✒ egui demos");
+                    ui.heading("✒ Modules");
                 });
 
                 ui.separator();
 
                 use egui::special_emojis::{GITHUB, TWITTER};
                 ui.hyperlink_to(
-                    format!("{} alumina on GitHub", GITHUB),
+                    format!("{} Alumina on GitHub", GITHUB),
                     "https://github.com/timschmidt/alumina",
                 );
                 ui.hyperlink_to(

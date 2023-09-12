@@ -42,7 +42,7 @@ impl Toolpath {
 
 impl super::Demo for Toolpath {
     fn name(&self) -> &'static str {
-        "🗠 Toolpath"
+        "🗠 2.5D"
     }
 
     fn show(&mut self, ctx: &Context, open: &mut bool) {

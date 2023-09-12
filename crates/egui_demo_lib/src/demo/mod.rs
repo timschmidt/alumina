@@ -4,18 +4,21 @@
 
 // ----------------------------------------------------------------------------
 
+pub mod images;
+pub mod toolpath;
+pub mod controls;
+
+//pub mod cad;
 pub mod about;
 //pub mod cad;
 pub mod code_editor;
 pub mod code_example;
 pub mod context_menu;
-pub mod controls;
 pub mod dancing_strings;
 pub mod demo_app_windows;
 pub mod drag_and_drop;
 pub mod font_book;
 pub mod highlighting;
-pub mod images;
 pub mod layout_test;
 pub mod misc_demo_window;
 pub mod multi_touch;
@@ -30,8 +33,6 @@ pub mod table_demo;
 pub mod tests;
 pub mod text_edit;
 pub mod toggle_switch;
-pub mod toolpath;
-//pub mod voxels;
 pub mod widget_gallery;
 pub mod window_options;
 pub mod window_with_panels;

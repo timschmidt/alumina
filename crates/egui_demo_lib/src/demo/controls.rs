@@ -36,7 +36,7 @@ impl super::Demo for Controls {
 impl super::View for Controls {
     #[allow(clippy::unused_self)]
     fn ui(&mut self, ui: &mut Ui) {
-        let axes = ["X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I"];
+        let axes = ["X", "Y", "Z", "A", "B"];
         for axis in axes {
             ui.vertical(|ui| {
                 ui.horizontal(|ui| {
