@@ -1,8 +1,6 @@
 use egui::*;
 use rfd::AsyncFileDialog;
-use std::fs;
-use std::ffi::OsStr;
-use std::io::{BufReader, Read, Write};
+use std::io::{BufReader, Read};
 use zip;
 //use glium::texture::RawImage2d;
 use image::io::Reader as ImageReader;
@@ -11,7 +9,7 @@ use std::io::Cursor;
 use std::future::Future;
 use egui::TextureId;
 use egui_extras::RetainedImage;
-use egui::{CentralPanel, Frame, Ui};
+use egui::Ui;
 use std::sync::{Arc, Mutex};
 
 #[derive(Default, Debug)]

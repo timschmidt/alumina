@@ -96,8 +96,6 @@ follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-
 ## Modules
 ### Algorithms
 - GJK ([Youtube](https://www.youtube.com/watch?v=ajv46BSqcK4))
-- CSG.js - difference, union, intersection in 2D, 3D
-- primitive shapes in 2D, 3D: point, line, triangle, prism, sphere, cylinder / cone
 - [curve tesselation](https://docs.rs/lyon_geom/latest/lyon_geom/)
 - calculate normal vector of line, angle, triangle
 - identify inside and outside of closed polylines (i.e. part and waste)
@@ -106,7 +104,9 @@ follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-
 - shape offsetting
     - https://crates.io/crates/contour
     - https://crates.io/crates/cavalier_contours
-    - https://raphlinus.github.io/curves/2022/09/09/parallel-beziers.html (from here: https://news.ycombinator.com/item?id=32784491)
+    - https://raphlinus.github.io/curves/2022/09/09/parallel-beziers.html (from here: https://news.ycombinator.com/item?id=32784491 code here: https://github.com/linebender/kurbo/pull/230)
+    - robust path operations: https://github.com/raphlinus/raphlinus.github.io/issues/79
+    - https://github.com/linebender/kurbo docs: https://raphlinus.github.io/curves/2023/04/18/bezpath-simplify.html
 - arbitrary 2D shape packing, shared surfaces
     - https://crates.io/crates/space-filling
     - https://github.com/prusa3d/PrusaSlicer/tree/master/src/libnest2d

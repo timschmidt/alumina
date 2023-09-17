@@ -20,7 +20,7 @@ pub struct esp32c6 {
 
 impl super::Demo for esp32c6 {
     fn name(&self) -> &'static str {
-        "🗠 2D bitmap view"
+        "🖳 ESP32-C6"
     }
 
     fn show(&mut self, ctx: &Context, open: &mut bool) {

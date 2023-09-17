@@ -1,16 +1,4 @@
 use egui::*;
-use std::fs;
-use std::ffi::OsStr;
-use std::io::{BufReader, Read, Write};
-use std::process::exit;
-use zip;
-use svg2polylines::{self, Polyline};
-use dxf::Drawing;
-use dxf::entities::*;
-use ngc::parse::parse;
-use gen_gcode::*;
-
-use crate::demo::Demo;
 
 #[derive(PartialEq, Default, Debug)]
 pub struct Controls {

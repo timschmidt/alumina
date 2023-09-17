@@ -1,21 +1,15 @@
 use dxf::entities::*;
 use dxf::Drawing;
 use egui::*;
-use gen_gcode::*;
-use ngc::parse::parse;
 use plot::{Plot, PlotResponse};
-use rfd::{AsyncFileDialog, FileHandle};
-use std::ffi::OsStr;
-use std::fs;
+use rfd::AsyncFileDialog;
 use std::future::Future;
-use std::io::{BufReader, Read, Write};
-use std::process::exit;
-use svg2polylines::{self, Polyline};
-use zip;
+//use svg2polylines::{self, Polyline};
 use std::sync::{Arc, Mutex};
 use url::{Url, Host, Position};
+use cavalier_contours::{pline_closed, polyline::Polyline, polyline::PlineSource};
 
-use crate::demo::Demo;
+//use crate::demo::Demo;
 
 #[derive(Default, Debug)]
 pub struct Toolpath {
@@ -67,6 +61,8 @@ impl super::View for Toolpath {
             inner: line_to_plot,
             ..
         } = plot.show(ui, |plot_ui| (plot_ui.line(line_to_plot),));
+
+        let offset = 5.0; // mm
 
         let ui_open_file = ui
             .button("Open file")
@@ -250,12 +246,14 @@ async fn send_geometry(x: f64, y: f64, z: f64, e: f64, f: f64) -> () {
     let response = client.post(url).body(data).send().await;
 }
 
-fn is_approx_zero(val: f64) -> bool {
-    val.abs() < 1e-6
+fn shrink_toolpath(polylines: &[Polyline<f64>], offset: f64) -> Vec<Polyline<f64>> {
+    polylines.iter().flat_map(|polyline| {
+        polyline.parallel_offset(offset)
+    }).collect::<Vec<_>>()
 }
 
-fn is_approx_integer(val: f64) -> bool {
-    val.fract().abs() < 1e-6
+fn grow_toolpath(polylines: &[Polyline<f64>], offset: f64) -> Vec<Polyline<f64>> {
+    shrink_toolpath(polylines, -offset)
 }
 
 #[cfg(not(target_arch = "wasm32"))]

@@ -58,6 +58,7 @@ image = "0.24.7"
 #egui_glium = { version = "0.22.0", path = "../egui_glium", default-features = false }
 #qoi = "0.4.1"
 rapid-qoi = "0.6.1"
+cavalier_contours = "0.3.0"
 
 [dev-dependencies]
 criterion = { version = "0.4", default-features = false }
