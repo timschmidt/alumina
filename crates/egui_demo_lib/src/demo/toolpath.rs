@@ -7,7 +7,7 @@ use std::future::Future;
 //use svg2polylines::{self, Polyline};
 use std::sync::{Arc, Mutex};
 use url::{Url, Host, Position};
-use cavalier_contours::{pline_closed, polyline::Polyline, polyline::PlineSource};
+use cavalier_contours::{pline_closed, polyline::Polyline, polyline::PlineSource, polyline::PlineVertex};
 
 //use crate::demo::Demo;
 
@@ -63,6 +63,7 @@ impl super::View for Toolpath {
         } = plot.show(ui, |plot_ui| (plot_ui.line(line_to_plot),));
 
         let offset = 5.0; // mm
+        let polylines = convert_to_polylines(self.points_to_plot.clone());
 
         let ui_open_file = ui
             .button("Open file")
@@ -93,11 +94,25 @@ impl super::View for Toolpath {
         };
 
         if ui_toolpath_shrink.clicked() {
+            let shrunk_polylines = shrink_toolpath(&polylines, offset);
+            self.points_to_plot = vec![];
 
+            for polyline in &shrunk_polylines {
+                for vertex in &polyline.vertex_data {
+                    self.points_to_plot.push([vertex.x, vertex.y]);
+                }
+            }
         }
 
         if ui_toolpath_grow.clicked() {
+            let grown_polylines = grow_toolpath(&polylines, offset);
+            self.points_to_plot = vec![];
 
+            for polyline in &grown_polylines {
+                for vertex in &polyline.vertex_data {
+                    self.points_to_plot.push([vertex.x, vertex.y]);
+                }
+            }
         }
 
         if ui_toolpath_status_on.clicked() {
@@ -254,6 +269,30 @@ fn shrink_toolpath(polylines: &[Polyline<f64>], offset: f64) -> Vec<Polyline<f64
 
 fn grow_toolpath(polylines: &[Polyline<f64>], offset: f64) -> Vec<Polyline<f64>> {
     shrink_toolpath(polylines, -offset)
+}
+
+fn convert_to_polylines(points_to_plot: Vec<[f64; 2]>) -> Vec<Polyline> {
+    let mut polylines = Vec::new();
+
+    if !points_to_plot.is_empty() {
+        let mut polyline = Polyline {
+            vertex_data: Vec::new(),
+            is_closed: false, // Adjust this based on your specific requirements
+        };
+
+        for point in points_to_plot {
+            let vertex = PlineVertex {
+                x: point[0],
+                y: point[1],
+                bulge: 0.0, // Adjust this based on your specific requirements
+            };
+            polyline.vertex_data.push(vertex);
+        }
+
+        polylines.push(polyline);
+    }
+
+    polylines
 }
 
 #[cfg(not(target_arch = "wasm32"))]
