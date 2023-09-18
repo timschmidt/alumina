@@ -277,14 +277,14 @@ fn convert_to_polylines(points_to_plot: Vec<[f64; 2]>) -> Vec<Polyline> {
     if !points_to_plot.is_empty() {
         let mut polyline = Polyline {
             vertex_data: Vec::new(),
-            is_closed: false, // Adjust this based on your specific requirements
+            is_closed: true,  // needs logic here to determine this based on input
         };
 
         for point in points_to_plot {
             let vertex = PlineVertex {
                 x: point[0],
                 y: point[1],
-                bulge: 0.0, // Adjust this based on your specific requirements
+                bulge: 0.0,
             };
             polyline.vertex_data.push(vertex);
         }

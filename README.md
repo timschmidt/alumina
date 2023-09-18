@@ -68,7 +68,7 @@ MIT / BSD / Apache
 ### Dependencies
 ```
 sudo dnf groupinstall "C Development Tools and Libraries" "Development Tools"
-sudo dnf install libudev-devel glib-devel gdk-pixbuf2-devel atk-devel cairo-devel pango-devel gtk3-devel
+sudo dnf install patch uglifyjs zstd libudev-devel glib-devel gdk-pixbuf2-devel atk-devel cairo-devel pango-devel gtk3-devel
 sudo ln -s /usr/lib/gcc/x86_64-redhat-linux/12/include/stdarg.h /usr/include/stdarg.h
 sudo ln -s /usr/lib/gcc/x86_64-redhat-linux/12/include/stddef.h /usr/include/stdbdef.h
 sudo ln -s /usr/lib/gcc/x86_64-redhat-linux/12/include/stdbool.h /usr/include/stdbool.h
@@ -85,7 +85,7 @@ rustup default nightly
 ### Building
 #### Linux
 ```
-cargo build --release
+scripts/build_demo_web.sh --release
 ```
 #### Windows
 ```
@@ -176,7 +176,7 @@ follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-
     - https://github.com/esp-rs/rust
     - https://github.com/esp-rs/esp-idf-hal
     - https://github.com/esp-rs/esp-hal
-    - https://github.com/MabezDev/xtensa-rust-quickstart
+    - https://crates.io/crates/lib-rv32-mcu  -- risc-v emulator
 - [accellerometer](https://github.com/NeoBirth/accelerometer.rs)
 - [3 phase driver (triple H bridge)]
 - [stepper driver (dual H bridge)]
