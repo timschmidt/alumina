@@ -38,6 +38,7 @@ Todo:
 - [ ] fix github CI
 - [ ] implement tree control for CAD window
 - [ ] implement add / remove buttons for CAD tree control
+- [ ] integrate https://surrealdb.com/
 
 ## Goals:
 - Easy setup
