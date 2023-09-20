@@ -11,6 +11,7 @@ pub mod toolpath;
 //pub mod esp32c3;
 //pub mod esp32c6;
 pub mod controls;
+pub mod postprocess;
 pub mod about;
 //pub mod cad;
 pub mod code_editor;

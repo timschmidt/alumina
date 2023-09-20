@@ -21,6 +21,7 @@ impl Default for Demos {
         Self::from_demos(vec![
             Box::<super::images::Images>::default(),
             Box::<super::toolpath::Toolpath>::default(),
+            Box::<super::postprocess::Postprocess>::default(),
             //Box::<super::cad::Cad>::default(),
             //Box::<super::voxels::Voxels>::default(),
             //Box::<super::esp32c3::esp32c3>::default(),
