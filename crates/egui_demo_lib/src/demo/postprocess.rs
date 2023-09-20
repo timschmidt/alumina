@@ -60,24 +60,31 @@ impl super::View for Postprocess {
             .button("Open file")
             .on_hover_text("Open gcode file");
         ui.label("Profile");
-        let ui_profile = egui::ComboBox::from_id_source()
+        let ui_profile = egui::ComboBox::from_label("")
             .selected_text(format!("{:?}", self.radio))
             .show_ui(ui, |ui| {
-                ui.style_mut().wrap = Some(false);
+                ui.style_mut().wrap = Some(true);
                 ui.set_min_width(60.0);
                 ui.selectable_value(&mut self.radio, Enum::First, "First");
                 ui.selectable_value(&mut self.radio, Enum::Second, "Second");
                 ui.selectable_value(&mut self.radio, Enum::Third, "Third");
             });
         ui.label("Tool 1 width");
-        let ui_tool_one_width = egui::TextEdit::singleline(&mut self.string).hint_text("60");
-        let ui_tool_two_width = egui::TextEdit::singleline(&mut self.string).hint_text("60");
-        let ui_tool_three_width = egui::TextEdit::singleline(&mut self.string).hint_text("60");
-        let ui_tool_four_width = egui::TextEdit::singleline(&mut self.string).hint_text("30");
-        let ui_tool_one_offset = egui::TextEdit::singleline(&mut self.string).hint_text("0");
-        let ui_tool_two_offset = egui::TextEdit::singleline(&mut self.string).hint_text("100");
-        let ui_tool_three_offset = egui::TextEdit::singleline(&mut self.string).hint_text("200");
-        let ui_tool_four_offset = egui::TextEdit::singleline(&mut self.string).hint_text("300");
+        let ui_tool_one_width = egui::TextEdit::singleline(&mut self.string).hint_text("60").show(ui);
+        ui.label("Tool 2 width");
+        let ui_tool_two_width = egui::TextEdit::singleline(&mut self.string).hint_text("60").show(ui);
+        ui.label("Tool 3 width");
+        let ui_tool_three_width = egui::TextEdit::singleline(&mut self.string).hint_text("60").show(ui);
+        ui.label("Tool 4 width");
+        let ui_tool_four_width = egui::TextEdit::singleline(&mut self.string).hint_text("30").show(ui);
+        ui.label("Tool 1 offset");
+        let ui_tool_one_offset = egui::TextEdit::singleline(&mut self.string).hint_text("100").show(ui);
+        ui.label("Tool 2 offset");
+        let ui_tool_two_offset = egui::TextEdit::singleline(&mut self.string).hint_text("200").show(ui);
+        ui.label("Tool 3 offset");
+        let ui_tool_three_offset = egui::TextEdit::singleline(&mut self.string).hint_text("300").show(ui);
+        ui.label("Tool 4 offset");
+        let ui_tool_four_offset = egui::TextEdit::singleline(&mut self.string).hint_text("400").show(ui);
         let ui_process_file = ui.button("Process and save").on_hover_text("Process the gcode file and save the result");
 
         let file_arc = Arc::clone(&self.file);
