@@ -1,5 +1,7 @@
 # Alumina - a firmware and user interface for CNC and more
 
+No license is granted to redistribute this work under any circumstance.
+
 Todo:
 - [ ] read boot button as input and display status
 - [ ] parse self.url and use host portion to address microcontroller instead of hard coded uri
@@ -35,10 +37,12 @@ Todo:
 - [ ] implement topleveling algorithm in firmware
 - [ ] include charge curves for common chemistries
 - [ ] run flamegraphs on UI and firmware, and add to automated tests
-- [ ] fix github CI
+- [x] fix github CI
 - [ ] implement tree control for CAD window
 - [ ] implement add / remove buttons for CAD tree control
 - [ ] integrate https://surrealdb.com/
+- [x] integrate cavalier contours
+- [ ] develop datastructure to represent idealized microcontroller
 
 ## Goals:
 - Easy setup
