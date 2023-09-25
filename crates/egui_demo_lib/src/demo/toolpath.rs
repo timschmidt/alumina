@@ -76,6 +76,8 @@ impl super::View for Toolpath {
         let ui_toolpath_status_off = ui.button("Off").on_hover_text("Turn the status light off");
         let ui_toolpath_send = ui.button("Send").on_hover_text("Send geometry to the machine");
         let ui_toolpath_plan = ui.button("Plan").on_hover_text("Plan toolpath and display it");
+        let ui_toolpath_relay_on = ui.button("Relay on").on_hover_text("Turn the relay on");
+        let ui_toolpath_relay_off = ui.button("Relay off").on_hover_text("Turn the relay off");
 
         let cad_file_arc = Arc::clone(&self.cad_file);
 
@@ -121,6 +123,14 @@ impl super::View for Toolpath {
 
         if ui_toolpath_status_off.clicked() {
             execute(status_off());
+        }
+
+        if ui_toolpath_relay_on.clicked() {
+            execute(relay_on());
+        }
+
+        if ui_toolpath_relay_off.clicked() {
+            execute(relay_off());
         }
 
         if ui_toolpath_send.clicked() {
@@ -248,6 +258,31 @@ async fn status_off() -> () {
     let client = reqwest::Client::new();
     let response = client.post(url).body(data).send().await;
 }
+
+async fn relay_on() -> () {
+    // Replace with your actual endpoint
+    let url = "http://alumina/";
+
+    // Define the plain text data to send (adjust as needed)
+    let data = "relay_on";
+
+    // Make the POST request
+    let client = reqwest::Client::new();
+    let response = client.post(url).body(data).send().await;
+}
+
+async fn relay_off() -> () {
+    // Replace with your actual endpoint
+    let url = "http://alumina/";
+
+    // Define the plain text data to send (adjust as needed)
+    let data = "relay_off";
+
+    // Make the POST request
+    let client = reqwest::Client::new();
+    let response = client.post(url).body(data).send().await;
+}
+
 
 async fn send_geometry(x: f64, y: f64, z: f64, e: f64, f: f64) -> () {
     // Replace with your actual endpoint

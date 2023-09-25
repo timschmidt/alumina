@@ -13,7 +13,6 @@ pub mod toolpath;
 pub mod controls;
 pub mod postprocess;
 pub mod about;
-//pub mod cad;
 pub mod code_editor;
 pub mod code_example;
 pub mod context_menu;
