@@ -20,10 +20,8 @@ Todo:
 - [x] get 2D image viewer based on a bitmapped memory region working in GUI
 - [ ] get 3d viewer module based on kiss3d / miniquad working for CAD
 - [ ] implement ramp_maker in firmware from https://github.com/braun-embedded/ramp-maker/blob/main/examples/basic.rs
-- [ ] implement setup mode, listening for esp direct communication of setup parameters and state machine around when to enable / disable setup mode
-- [ ] implement wifi AP mode, and pull credentials into main.rs based on https://github.com/esp-rs/esp-idf-svc/blob/master/examples/json_post_handler.rs
+- [ ] implement wifi AP mode, and configuration screens for connecting to other wifi
 - [ ] simplify and cargo-ize build system
-- [x] implement https://github.com/101arrowz/fzstd as polyfill for wasm compression
 - [ ] https://github.com/rustwasm/wasm-bindgen/pull/2000 WebXR bindings for WASM
 - [ ] implement ETag / if-none-match for wasm based on build ( https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#etagif-none-match )
 - [ ] enable https in firmware / UI with pinned cert, maybe still load UI via HTTP
@@ -37,12 +35,12 @@ Todo:
 - [ ] implement topleveling algorithm in firmware
 - [ ] include charge curves for common chemistries
 - [ ] run flamegraphs on UI and firmware, and add to automated tests
-- [x] fix github CI
 - [ ] implement tree control for CAD window
 - [ ] implement add / remove buttons for CAD tree control
 - [ ] integrate https://surrealdb.com/
 - [x] integrate cavalier contours
 - [ ] develop datastructure to represent idealized microcontroller
+- [ ] send and receive Rusty Object Notation inside HTTP messages
 
 ## Goals:
 - Easy setup
@@ -138,6 +136,7 @@ follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-
     - https://crates.io/crates/newton_rootfinder
     - https://crates.io/crates/levenberg-marquardt
     - https://github.com/djrakita/optima_toolbox
+    - https://www.youtube.com/watch?v=jvPPXbo87ds
 - [motion ramping](https://crates.io/crates/ramp-maker)
 - [motion smoothing](https://www.klipper3d.org/Kinematics.html) using a lookahead window
 - contour tracing from raster to vector

@@ -22,7 +22,7 @@ use wifi::wifi;
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 
-pub mod interrupt_handler;
+pub mod interrupts;
 pub mod planner;
 pub mod serial;
 pub mod pins;
