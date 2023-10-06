@@ -293,11 +293,25 @@ fn main() -> Result<()> {
         Ok(())
     })?;
 
-    server.fn_handler("/time", Method::Get, |request| {
+    server.fn_handler("/time", Method::Get, |request| {  // return contents of microcontroller cycle counter
         let timer = 0;
         let timer_text = timer.to_string();
 
         let response = request.into_response(200, Some(&("Time: ".to_owned() + &timer_text)), &[("Content-Type", "text/ron")]);
+        response?.flush()?;
+        Ok(())
+    })?;
+
+    server.fn_handler("/files", Method::Get, |request| {  // List files stored on SD card
+
+        let response = request.into_response(200, Some("Files: "), &[("Content-Type", "text/ron")]);
+        response?.flush()?;
+        Ok(())
+    })?;
+
+    server.fn_handler("/files", Method::Post, move|mut request| {  // Upload file to SD card
+
+        let response = request.into_response(200, Some("Files: "), &[("Content-Type", "text/ron")]);
         response?.flush()?;
         Ok(())
     })?;

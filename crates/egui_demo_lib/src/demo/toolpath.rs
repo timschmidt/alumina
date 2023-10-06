@@ -52,19 +52,6 @@ impl super::Demo for Toolpath {
 impl super::View for Toolpath {
     #[allow(clippy::unused_self)]
     fn ui(&mut self, ui: &mut Ui) {
-        let points = self.points_to_plot.clone();
-        let mut line_to_plot = egui::widgets::plot::Line::new(points);
-        let plot = Plot::new("Geometry").height(700.0).allow_scroll(false);
-
-        let PlotResponse {
-            response,
-            inner: line_to_plot,
-            ..
-        } = plot.show(ui, |plot_ui| (plot_ui.line(line_to_plot),));
-
-        let offset = 5.0; // mm
-        let polylines = convert_to_polylines(self.points_to_plot.clone());
-
         let ui_open_file = ui
             .button("Open file")
             .on_hover_text("SVG and DXF are supported");
@@ -78,6 +65,19 @@ impl super::View for Toolpath {
         let ui_toolpath_plan = ui.button("Plan").on_hover_text("Plan toolpath and display it");
         let ui_toolpath_relay_on = ui.button("Relay on").on_hover_text("Turn the relay on");
         let ui_toolpath_relay_off = ui.button("Relay off").on_hover_text("Turn the relay off");
+
+        let points = self.points_to_plot.clone();
+        let mut line_to_plot = egui::widgets::plot::Line::new(points);
+        let plot = Plot::new("Geometry").height(700.0).allow_scroll(false);
+
+        let PlotResponse {
+            response,
+            inner: line_to_plot,
+            ..
+        } = plot.show(ui, |plot_ui| (plot_ui.line(line_to_plot),));
+
+        let offset = 5.0; // mm
+        let polylines = convert_to_polylines(self.points_to_plot.clone());
 
         let cad_file_arc = Arc::clone(&self.cad_file);
 
@@ -137,6 +137,10 @@ impl super::View for Toolpath {
             for point in &self.points_to_plot {
                 execute(send_geometry( point[0], point[1], 0.0, 0.0, 100.0));
             }
+        }
+
+        if ui_toolpath_plan.clicked() {
+
         }
 
         if ui_open_file.clicked() {
