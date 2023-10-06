@@ -301,7 +301,16 @@ fn main() -> Result<()> {
         Ok(())
     })?;
 
-    server.fn_handler("/", Method::Post, move|mut request| {
+    server.fn_handler("/time", Method::Get, |request| {
+        let timer = 0;
+        let timer_text = timer.to_string();
+
+        let response = request.into_response(200, Some(&("Time: ".to_owned() + &timer_text)), &[("Content-Type", "text/ron")]);
+        response?.flush()?;
+        Ok(())
+    })?;
+
+    server.fn_handler("/queue", Method::Post, move|mut request| {
 
         let header = request.header("Accept").unwrap().to_string();
 

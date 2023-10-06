@@ -237,7 +237,7 @@ impl super::View for Toolpath {
 
 async fn status_on() -> () {
     // Replace with your actual endpoint
-    let url = "http://alumina/";
+    let url = "http://alumina/queue";
 
     // Define the plain text data to send (adjust as needed)
     let data = "status_on";
@@ -249,7 +249,7 @@ async fn status_on() -> () {
 
 async fn status_off() -> () {
     // Replace with your actual endpoint
-    let url = "http://alumina/";
+    let url = "http://alumina/queue";
 
     // Define the plain text data to send (adjust as needed)
     let data = "status_off";
@@ -261,7 +261,7 @@ async fn status_off() -> () {
 
 async fn relay_on() -> () {
     // Replace with your actual endpoint
-    let url = "http://alumina/";
+    let url = "http://alumina/queue";
 
     // Define the plain text data to send (adjust as needed)
     let data = "relay_on";
@@ -273,7 +273,7 @@ async fn relay_on() -> () {
 
 async fn relay_off() -> () {
     // Replace with your actual endpoint
-    let url = "http://alumina/";
+    let url = "http://alumina/queue";
 
     // Define the plain text data to send (adjust as needed)
     let data = "relay_off";
@@ -286,7 +286,7 @@ async fn relay_off() -> () {
 
 async fn send_geometry(x: f64, y: f64, z: f64, e: f64, f: f64) -> () {
     // Replace with your actual endpoint
-    let url = "http://alumina/";
+    let url = "http://alumina/queue";
 
     // Define the plain text data to send (adjust as needed)
     let data = format!("G0 X{} Y{} Z{} E{} F{}", x, y, z, e, f);
