@@ -2,8 +2,22 @@ use egui::*;
 
 #[derive(PartialEq, Default, Debug)]
 pub struct Configuration {
-    axis_offsets: [f64; 12],
+    axis_offsets: [f64; 5],
+    radio: WirelessType,
     string: String,
+}
+
+#[derive(Debug, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
+enum WirelessType {
+    Client,
+    AccessPoint,
+}
+
+impl Default for WirelessType {
+    fn default() -> Self {
+        WirelessType::Client
+    }
 }
 
 impl super::Demo for Configuration {
@@ -24,24 +38,16 @@ impl super::Demo for Configuration {
 impl super::View for Configuration {
     #[allow(clippy::unused_self)]
     fn ui(&mut self, ui: &mut Ui) {
-        let axes = ["X", "Y", "Z", "A", "B"];
-        for axis in axes {
-            ui.vertical(|ui| {
-                ui.horizontal(|ui| {
-                    if ui.button(format!("Home {}", axis)).clicked() {
-                        // Home the axis
-                    }
-                    let jog_values = [-100.0, -10.0, -1.0, -0.1, 0.1, 1.0, 10.0, 100.0];
-                    for &jog_value in jog_values.iter() {
-                        if ui.button(format!("{}", jog_value)).clicked() {
-                            // Jog the axis by jog_value
-                        }
-                    }
-                    ui.add(Slider::new(&mut self.axis_offsets[0], -1000.0..=1000.0).text("Offset"));
-                });
-            });
-        }
         ui.vertical(|ui| {
+            ui.label("Wireless mode");
+            let ui_wireless_mode = egui::ComboBox::from_label("")
+                .selected_text(format!("{:?}", self.radio))
+                .show_ui(ui, |ui| {
+                    ui.style_mut().wrap = Some(true);
+                    ui.set_min_width(60.0);
+                    ui.selectable_value(&mut self.radio, WirelessType::Client, "Client");
+                    ui.selectable_value(&mut self.radio, WirelessType::AccessPoint, "Access Point");
+                });
             ui.label("Tool 1 width");
             let ui_tool_one_width = egui::TextEdit::singleline(&mut self.string).hint_text("60").show(ui);
             ui.label("Tool 2 width");
@@ -59,6 +65,26 @@ impl super::View for Configuration {
             ui.label("Tool 4 offset");
             let ui_tool_four_offset = egui::TextEdit::singleline(&mut self.string).hint_text("400").show(ui);
         });
+
+        let axes = ["X", "Y", "Z", "A", "B"];
+        for axis in axes {
+            ui.vertical(|ui| {
+                ui.horizontal(|ui| {
+                    if ui.button(format!("Home {}", axis)).clicked() {
+                        // Home the axis
+                    }
+                    let jog_values = [-100.0, -10.0, -1.0, -0.1, 0.1, 1.0, 10.0, 100.0];
+                    for &jog_value in jog_values.iter() {
+                        if ui.button(format!("{}", jog_value)).clicked() {
+                            // Jog the axis by jog_value
+                        }
+                    }
+                    ui.add(Slider::new(&mut self.axis_offsets[0], -1000.0..=1000.0).text("Offset"));
+                });
+            });
+        }
+
+        let ui_save_configuration = ui.button("Save configuration").on_hover_text("Save configuration to device");
     }
 }
 

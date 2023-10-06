@@ -52,12 +52,8 @@ impl super::Demo for Toolpath {
 impl super::View for Toolpath {
     #[allow(clippy::unused_self)]
     fn ui(&mut self, ui: &mut Ui) {
-        let ui_open_file = ui
-            .button("Open file")
-            .on_hover_text("SVG and DXF are supported");
-        let ui_toolpath_shrink = ui
-            .button("Shrink")
-            .on_hover_text("Shrink the toolpath by 5mm");
+        let ui_open_file = ui.button("Open file").on_hover_text("SVG and DXF are supported");
+        let ui_toolpath_shrink = ui.button("Shrink").on_hover_text("Shrink the toolpath by 5mm");
         let ui_toolpath_grow = ui.button("Grow").on_hover_text("Grow the toolpath by 5mm");
         let ui_toolpath_status_on = ui.button("On").on_hover_text("Turn the status light on");
         let ui_toolpath_status_off = ui.button("Off").on_hover_text("Turn the status light off");

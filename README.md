@@ -11,8 +11,8 @@ Todo:
 - [ ] implement rate limiting in UI for geometry send
 - [ ] implement SD support in firmware
 - [ ] FAT / exFAT support for SD cards in firmware
-- [ ] browse SD over HTTP in firmware
-- [ ] UI for browsing SD in GUI
+- [x] browse SD over HTTP in firmware
+- [x] UI for browsing SD in GUI
 - [ ] read and display ADC values from micro
 - [ ] read and display timer from micro
 - [ ] read http headers, especially accept-encoding and content-length and others.
@@ -25,7 +25,7 @@ Todo:
 - [ ] https://github.com/rustwasm/wasm-bindgen/pull/2000 WebXR bindings for WASM
 - [ ] implement ETag / if-none-match for wasm based on build ( https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#etagif-none-match )
 - [ ] enable https in firmware / UI with pinned cert, maybe still load UI via HTTP
-- [ ] implement relay board support
+- [x] implement relay board support
 - [ ] implement single axis board support
 - [ ] implement 4 axis board support
 - [ ] implement 4 axis c-6 board support

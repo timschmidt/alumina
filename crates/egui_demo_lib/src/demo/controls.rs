@@ -2,7 +2,7 @@ use egui::*;
 
 #[derive(PartialEq, Default, Debug)]
 pub struct Controls {
-    axis_offsets: [f64; 12],
+    axis_offsets: [f64; 5],
     // Add a property to store the offset value for each axis
 }
 
