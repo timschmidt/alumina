@@ -267,35 +267,31 @@ fn main() -> Result<()> {
     let mut server = EspHttpServer::new(&webserver_configuration)?;
 
     // 2. Write a handler that returns the index page
-    server.fn_handler("/", Method::Get, |request| {
+    server.fn_handler("/", Method::Get, |request| {  // User interface index.html
         let response = request.into_response(200, Some("OK"), &[("Content-Type", "text/html"), ("Content-Encoding", "gzip")]);
-        //response?.write_all(include_bytes!("../../../docs/index.html.gz"))?;
         response?.write_all(include_bytes!("../../../docs/index.html.gz"))?;
         Ok(())
     })?;
 
-    server.fn_handler("/index.js", Method::Get, |request| {
+    server.fn_handler("/index.js", Method::Get, |request| {  // User interface index.js
         let response = request.into_response(200, Some("OK"), &[("Content-Type", "text/javascript"), ("Content-Encoding", "gzip")]);
-        //response?.write_all(include_bytes!("../../../docs/index.js.gz"))?;
         response?.write_all(include_bytes!("../../../docs/index.js.min.gz"))?;
         Ok(())
     })?;
 
-    server.fn_handler("/zstd.js", Method::Get, |request| {
+    server.fn_handler("/zstd.js", Method::Get, |request| {  // User interface zstd.js polyfill for decompressing the wasm binary
         let response = request.into_response(200, Some("OK"), &[("Content-Type", "text/javascript"), ("Content-Encoding", "gzip")]);
         response?.write_all(include_bytes!("../../../docs/zstd.js.min.gz"))?;
         Ok(())
     })?;
 
-    server.fn_handler("/index.wasm", Method::Get, |request| {
-        //let response = request.into_response(200, Some("OK"), &[("Content-Type", "application/wasm"), ("Content-Encoding", "gzip")]);
-        //response?.write_all(include_bytes!("../../../docs/index_bg.wasm.gz"))?;
+    server.fn_handler("/index.wasm", Method::Get, |request| {  // User interface wasm binary
         let response = request.into_response(200, Some("OK"), &[("Content-Type", "application/wasm"), ("Content-Encoding", "zstd")]);
         response?.write_all(include_bytes!("../../../docs/index_bg.wasm.zst"))?;
         Ok(())
     })?;
 
-    server.fn_handler("/favicon.ico", Method::Get, |request| {
+    server.fn_handler("/favicon.ico", Method::Get, |request| {  // User interface icon
         let response = request.into_response(200, Some("OK"), &[("Content-Type", "image/gif")]);
         response?.write_all(include_bytes!("../../../docs/favicon.gif"))?;
         Ok(())
@@ -306,6 +302,14 @@ fn main() -> Result<()> {
         let timer_text = timer.to_string();
 
         let response = request.into_response(200, Some(&("Time: ".to_owned() + &timer_text)), &[("Content-Type", "text/ron")]);
+        response?.flush()?;
+        Ok(())
+    })?;
+
+    server.fn_handler("/queue", Method::Get, |request| {  // respond with queue status
+        let queue = vec![];
+
+        let response = request.into_response(200, Some(&("Queue: ".to_owned() + &timer_text)), &[("Content-Type", "text/ron")]);
         response?.flush()?;
         Ok(())
     })?;
