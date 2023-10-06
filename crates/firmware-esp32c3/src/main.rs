@@ -216,34 +216,30 @@ fn main() -> Result<()> {
     let d6 = d6_main.clone();
     let d7_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio7)?));
     let d7 = d7_main.clone();
-    let d8_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio8)?));
-    let d8 = d8_main.clone();
+    //let d8_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio8)?));
+    //let d8 = d8_main.clone();
     let d9_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio9)?));
     let d9 = d9_main.clone();
-    let d10_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio10)?));
-    let d10 = d10_main.clone();
+    //let d10_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio10)?));
+    //let d10 = d10_main.clone();
     let d11_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio11)?));
     let d11 = d11_main.clone();
     let d12_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio12)?));
     let d12 = d12_main.clone();
     let d13_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio13)?));
     let d13 = d13_main.clone();
-    let d14_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio14)?));
-    let d14 = d14_main.clone();
-    let d15_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio15)?));
-    let d15 = d15_main.clone();
-    let d16_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio16)?));
-    let d16 = d16_main.clone();
-    let d17_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio17)?));
-    let d17 = d17_main.clone();
-    let d18_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio18)?));
-    let d18 = d18_main.clone();
-    let d19_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio19)?));
-    let d19 = d19_main.clone();
-    let d20_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio20)?));
-    let d20 = d20_main.clone();
-    let d21_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio21)?));
-    let d21 = d21_main.clone();
+    //let d14_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio14)?));
+    //let d14 = d14_main.clone();
+    //let d15_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio15)?));
+    //let d15 = d15_main.clone();
+    //let d16_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio16)?));
+    //let d16 = d16_main.clone();
+    //let d17_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio17)?));
+    //let d17 = d17_main.clone();
+    //let d18_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio18)?));
+    //let d18 = d18_main.clone();
+    //let d19_main = Arc::new(Mutex::new(esp_idf_hal::gpio::PinDriver::output(peripherals.pins.gpio19)?));
+    //let d19 = d19_main.clone();
 
     let status_led = d12_main.clone();
     let relay = d1_main.clone();
@@ -307,9 +303,9 @@ fn main() -> Result<()> {
     })?;
 
     server.fn_handler("/queue", Method::Get, |request| {  // respond with queue status
-        let queue = vec![];
+        let queue: Vec<i32> = vec![];
 
-        let response = request.into_response(200, Some(&("Queue: ".to_owned() + &timer_text)), &[("Content-Type", "text/ron")]);
+        let response = request.into_response(200, Some("Queue: "), &[("Content-Type", "text/ron")]);
         response?.flush()?;
         Ok(())
     })?;
@@ -330,14 +326,6 @@ fn main() -> Result<()> {
         println!("Received payload: {}", payload);
 
         match payload.trim() {
-            "time" => {
-                println!("Reporting time");
-                // ... read system time and report it directly ...
-
-                let response = request.into_response(200, Some("OK"), &[("Content-Type", "text/plain")]);
-                response?.write_all(header.as_bytes())?;
-                //response?.flush()?;
-            },
             "status_on" => {
                 println!("Turning status LED on");
                 // ... Set pin 12/13 high ...
@@ -593,7 +581,7 @@ fn main() -> Result<()> {
 
                 let response = request.into_response(200, Some("D13 low"), &[("Content-Type", "text/plain")]);
                 response?.flush()?;
-            },
+            },/*
             "d14_high" => {
                 println!("Setting D14 high");
                 // ... Set pin D14 high ...
@@ -689,39 +677,7 @@ fn main() -> Result<()> {
 
                 let response = request.into_response(200, Some("D19 low"), &[("Content-Type", "text/plain")]);
                 response?.flush()?;
-            },
-            "d20_high" => {
-                println!("Setting D20 high");
-                // ... Set pin D20 high ...
-                d20.lock().unwrap().set_high()?;
-
-                let response = request.into_response(200, Some("D20 high"), &[("Content-Type", "text/plain")]);
-                response?.flush()?;
-            },
-            "d20_low" => {
-                println!("Setting D20 low");
-                // ... Set pin D20 low ...
-                d20.lock().unwrap().set_low()?;
-
-                let response = request.into_response(200, Some("D20 low"), &[("Content-Type", "text/plain")]);
-                response?.flush()?;
-            },
-            "d21_high" => {
-                println!("Setting D21 high");
-                // ... Set pin D21 high ...
-                d21.lock().unwrap().set_high()?;
-
-                let response = request.into_response(200, Some("D21 high"), &[("Content-Type", "text/plain")]);
-                response?.flush()?;
-            },
-            "d21_low" => {
-                println!("Setting D21 low");
-                // ... Set pin D21 low ...
-                d21.lock().unwrap().set_low()?;
-
-                let response = request.into_response(200, Some("D21 low"), &[("Content-Type", "text/plain")]);
-                response?.flush()?;
-            },
+            },*/
             _ => {
                 println!("Unknown command: {}", payload);
                 // ... handle unknown command ...
