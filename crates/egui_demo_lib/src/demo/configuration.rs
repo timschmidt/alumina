@@ -4,6 +4,7 @@ use egui::*;
 pub struct Configuration {
     axis_offsets: [f64; 5],
     radio: WirelessType,
+    ssid: String,
     string: String,
 }
 
@@ -47,6 +48,17 @@ impl super::View for Configuration {
                     ui.set_min_width(60.0);
                     ui.selectable_value(&mut self.radio, WirelessType::Client, "Client");
                     ui.selectable_value(&mut self.radio, WirelessType::AccessPoint, "Access Point");
+                });
+            if ui.button("Scan").on_hover_text("Scan for available wireless networks").clicked() {
+                // Scan wifi networks and populate dropdown
+            }
+            let ui_wireless_ssid = egui::ComboBox::from_label("")
+                .selected_text(format!("{:?}", self.ssid))
+                .show_ui(ui, |ui| {
+                    ui.style_mut().wrap = Some(true);
+                    ui.set_min_width(60.0);
+                    ui.selectable_value(&mut self.ssid, "SSID1".to_string(), "SSID1");
+                    ui.selectable_value(&mut self.ssid, "SSID2".to_string(), "SSID2");
                 });
             ui.label("Tool 1 width");
             let ui_tool_one_width = egui::TextEdit::singleline(&mut self.string).hint_text("60").show(ui);

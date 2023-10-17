@@ -372,6 +372,20 @@ fn main() -> Result<()> {
                 let response = request.into_response(200, Some("Relay off"), &[("Content-Type", "text/plain")]);
                 response?.flush()?;
             },
+            "scan_wifi" => {
+                println!("Scanning Wifi");
+                // scan wifi networks
+
+                let response = request.into_response(200, Some("Wifi network SSIDs in RON format"), &[("Content-Type", "text/ron")]);
+                response?.flush()?;
+            },
+            "set_wifi" => {
+                println!("Setting Wifi");
+                // set wifi network parameters
+
+                let response = request.into_response(200, Some("Wifi network settings accepted"), &[("Content-Type", "text/ron")]);
+                response?.flush()?;
+            },
             "d0_high" => {
                 println!("Setting D0 high");
                 // ... Set pin D0 high ...
