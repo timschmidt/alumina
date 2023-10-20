@@ -98,6 +98,16 @@ cargo build --target x86_64-pc-windows-gnu --release
 follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-linux-to-macos.html)
 ## Modules
 ### Algorithms
+#### Boolean difference, intersection, union
+The [genmesh](https://crates.io/crates/genmesh) crate provides primitives and CSG operations
+![Boolean difference](../documentation/boolean_difference.png "Boolean difference")
+![Boolean intersection](../documentation/boolean_intersection.png "Boolean intersection")
+![Boolean union](../documentation/boolean_union.png "Boolean union")
+
+#### Constructive Solid Geometry
+![CSG Tree](../documentation/csg_tree.png "CSG Tree")
+
+- [Bresenham's algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm)
 - GJK ([Youtube](https://www.youtube.com/watch?v=ajv46BSqcK4))
 - [curve tesselation](https://docs.rs/lyon_geom/latest/lyon_geom/)
 - calculate normal vector of line, angle, triangle
@@ -144,6 +154,8 @@ follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-
     - [marching squares](https://crates.io/crates/marching-squares) creates contour lines from a heightmap of Vec\<Vec\<i16\>\>
 - [coordinate transformations](https://en.wikipedia.org/wiki/List_of_common_coordinate_transformations)
     - https://github.com/DaveKram/coord_transforms
+- https://blend2d.com/research/simplify_and_offset_bezier_curves.pdf
+- https://mecatronyx.gitlab.io/opencnc/opencn/CNC_Path_Planning_Algorithms/Geometric_Operations/Geometric_Operations.html
 - Solvespace's geometric solver is basically these files:
     - https://github.com/solvespace/solvespace/blob/master/src/expr.cpp
     - https://github.com/solvespace/solvespace/blob/master/src/constraint.cpp
