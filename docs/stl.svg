@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="740" width="740">
+	<defs>
+		<path id="arrow" d="M0,0 13,5 C11,2 11,-2 13,-5 Z M2,0 H66" stroke-miterlimit="8"/>
+	</defs>
+	
+	<g fill="none" stroke="#f00" stroke-width="1.5" stroke-dasharray="1.5,2.5">
+		<circle cx="370" cy="370" r="224"/>
+		<circle cx="370" cy="370" r="344"/>
+	</g>
+	
+	<g fill="none" stroke-width="1.7" stroke-linejoin="round">
+		<g stroke="#000">
+			<path d="M368,26 615,129 424,153 563,256 615,129 714,368 563,256 587,426 714,368 613,614 369,714 485,563 311,586 369,714 124,611 311,586 175,482 124,611 26,368 125,129 152,314 255,178 125,129 Z"/>
+			<path d="M26,368 152,314 124,611 M175,482 152,314 M613,614 485,563 714,368 M587,426 485,563"/>
+		</g>
+		<path d="M368,26 424,153 255,178 Z" stroke="#042dfa"/>
+	</g>
+	<g font-family="Arial, Liberation Sans, sans-serif">
+		<text font-size="52" x="16" y="62">STL-file</text>
+		<g font-size="20">
+			<text x="609" y="49">CAD model</text>
+			<text x="617" y="81">STL model</text>
+			<g fill="#042dfa">
+				<text x="290" y="99">a</text>
+				<text x="410" y="95">b</text>
+				<text x="345" y="179">c</text>
+			</g>
+			<text fill="#f00" x="347" y="138">x</text>
+		</g>
+	</g>
+	<use xlink:href="#arrow" transform="translate(540,70) rotate(-19)" stroke="#f00" fill="#f00"/>
+	<use xlink:href="#arrow" transform="translate(545,99) rotate(-19)" stroke="#00f" fill="#00f"/>
+</svg>

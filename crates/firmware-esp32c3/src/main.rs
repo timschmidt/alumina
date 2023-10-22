@@ -19,6 +19,8 @@ use std::{
 };
 use embedded_svc::io::Read;
 use wifi::wifi;
+use stepgen::Stepgen;
+
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 
@@ -294,6 +296,7 @@ fn main() -> Result<()> {
     })?;
 
     server.fn_handler("/time", Method::Get, |request| {  // return contents of microcontroller cycle counter
+        // todo: read timer contents here
         let timer = 0;
         let timer_text = timer.to_string();
 
@@ -374,9 +377,14 @@ fn main() -> Result<()> {
             },
             "scan_wifi" => {
                 println!("Scanning Wifi");
-                // scan wifi networks
+                //let scan_results = wifi::scan(|ap_info| {
+                    // Store SSID, signal strength, etc
+                //})?;
 
-                let response = request.into_response(200, Some("Wifi network SSIDs in RON format"), &[("Content-Type", "text/ron")]);
+                //let ssid_ron_string = format_scan_results(&scan_results);
+
+                //let response = request.into_response(200, Some(ssid_ron_string), &[("Content-Type", "text/ron")]);
+                let response = request.into_response(200, Some("Wifi scan results"), &[("Content-Type", "text/ron")]);
                 response?.flush()?;
             },
             "set_wifi" => {
@@ -729,3 +737,16 @@ fn main() -> Result<()> {
 fn temperature(val: f32) -> String {
     format!("chip temperature: {:.2}°C", val)
 }
+
+// Format results as RON string
+//fn format_scan_results(results: &[WifiScanResult]) -> String {
+//    // Build RON string
+//    format!(
+//        "[{}]",
+//        results
+//            .iter()
+//            .map(|r| format!("{{ssid: \"{}\", signal: {}}}", r.ssid, r.signal))
+//            .collect::<Vec<_>>()
+//            .join(", ")
+//    )
+//}

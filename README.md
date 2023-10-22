@@ -54,7 +54,7 @@ Todo:
 - Plasma, Laser, Router, Mill, Operator, Building support
 - Versioned interfaces with feature discovery
 ## Status:
-Initial implementation for host and MCU
+Initial implementation for GUI and MCU
 ## Application:
 - High security and mission critical infrastructure automation
 - Internet connected automation
@@ -105,8 +105,6 @@ follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-
     - https://en.wikipedia.org/wiki/Straight_skeleton
     - https://doc.cgal.org/latest/Straight_skeleton_2/index.html
 - shape offsetting
-    - https://crates.io/crates/contour
-    - https://crates.io/crates/cavalier_contours
     - https://raphlinus.github.io/curves/2022/09/09/parallel-beziers.html (from here: https://news.ycombinator.com/item?id=32784491 code here: https://github.com/linebender/kurbo/pull/230)
     - robust path operations: https://github.com/raphlinus/raphlinus.github.io/issues/79
     - https://github.com/linebender/kurbo docs: https://raphlinus.github.io/curves/2023/04/18/bezpath-simplify.html
@@ -137,6 +135,7 @@ follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-
     - https://crates.io/crates/levenberg-marquardt
     - https://github.com/djrakita/optima_toolbox
     - https://www.youtube.com/watch?v=jvPPXbo87ds
+    - https://en.wikipedia.org/wiki/Root-finding_algorithms
 - [motion ramping](https://crates.io/crates/ramp-maker)
 - [motion smoothing](https://www.klipper3d.org/Kinematics.html) using a lookahead window
 - contour tracing from raster to vector
@@ -177,9 +176,6 @@ follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-
     - https://crates.io/crates/enc28j60
     - http://blog.japaric.io/wd-4-enc28j60/
 - ESP32
-    - https://github.com/esp-rs/rust
-    - https://github.com/esp-rs/esp-idf-hal
-    - https://github.com/esp-rs/esp-hal
     - https://crates.io/crates/lib-rv32-mcu  -- risc-v emulator
 - [accellerometer](https://github.com/NeoBirth/accelerometer.rs)
 - [3 phase driver (triple H bridge)]
@@ -280,13 +276,6 @@ follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-
     - fix inverted normals
     - detect and fix manifoldness
 
-### We stuff the data into [nalgebra types](https://docs.rs/nalgebra/latest/nalgebra/geometry/index.html)
-- points: tuples of integer values representing coordinates in X, Y, Z axes in English Metric Units
-- polylines: ordered list or vec of points
-    - will be useful to have an iterator over each set of polylines
-    - perhaps useful to keep connected polylines in seperate buckets for various ops, iterator over connected polyline groups
-- triangles: tuples of point tuples, normal vector encoded in winding order
-- Ideally all of these are organized as an array or vec of references into another vec of points.  Or some other memory efficient arrangement.
 - https://crates.io/crates/geo/
 - https://crates.io/crates/geo-booleanop/
 - https://github.com/georust
@@ -422,10 +411,8 @@ follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-
 ## Resources:
 ### General:
 - https://rust-unofficial.github.io/patterns/intro.html
-- https://en.wikipedia.org/wiki/SCADA
 - https://github.com/rust-embedded/awesome-embedded-rust
 - https://github.com/armyofevilrobots/aoer-plotty-rs
-- https://github.com/scottalford75/Remora
 - https://mecatronyx.gitlab.io/opencnc/opencn/CNC_Path_Planning_Algorithms/Geometric_Operations/Geometric_Operations.html
 - https://github.com/distrap/lambdadrive/
 - https://github.com/orgs/distrap/repositories
