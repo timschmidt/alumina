@@ -422,6 +422,7 @@ The [genmesh](https://crates.io/crates/genmesh) crate provides primitives and CS
 
 ## Resources:
 ### General:
+- https://minus-ze.ro/posts/flattening-bezier-curves-and-arcs/
 - https://rust-unofficial.github.io/patterns/intro.html
 - https://github.com/rust-embedded/awesome-embedded-rust
 - https://github.com/armyofevilrobots/aoer-plotty-rs
