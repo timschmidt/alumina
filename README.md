@@ -300,6 +300,7 @@ The [genmesh](https://crates.io/crates/genmesh) crate provides primitives and CS
 
 ### We may need to do trigonometric functions on fixed point numbers quickly:
 - https://github.com/sebcrozet/cordic
+- https://github.com/francisrstokes/githublog/blob/main/2024/5/10/cordic.md
 
 ### We may need to turn shapes into triangles for the GPU:
 - https://github.com/nical/lyon
