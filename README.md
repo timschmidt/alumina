@@ -2,6 +2,8 @@
 
 No license is granted to redistribute this work under any circumstance.
 
+![Alumina UI screenshot](docs/alumina-screenshot.png)
+
 Todo:
 - [ ] read boot button as input and display status
 - [ ] parse self.url and use host portion to address microcontroller instead of hard coded uri
