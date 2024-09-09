@@ -1,4 +1,4 @@
-# Alumina - a firmware and user interface for CNC and more
+# Alumina - unified firmware and user interface for machine control
 
 No license is granted to redistribute this work under any circumstance.
 
