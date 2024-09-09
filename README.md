@@ -60,8 +60,6 @@ Initial implementation for GUI and MCU
 ## Application:
 - High security and mission critical infrastructure automation
 - Internet connected automation
-## License(s):
-MIT / BSD / Apache
 ## Underlying concepts:
 - [English Metric Units](https://startbigthinksmall.wordpress.com/2010/01/04/points-inches-and-emus-measuring-units-in-office-open-xml/)
   EMUs are used for coordinates in vector, raster, and voxel space. The EMU is a virtual unit to bridge centimeters, inches, and points. One inch equates to 914400 EMUs and a centimeter is 360000. The number 914400 is calculated by the least common multiples: 100 and 254, times 72. This ensures that we can convert back and forth between integer 100th inches, millimeters and pixels without any rounding errors.
@@ -98,6 +96,7 @@ cargo build --target x86_64-pc-windows-gnu --release
 ```
 #### MacOS
 follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-linux-to-macos.html)
+
 ## Modules
 ### Algorithms
 #### Boolean difference, intersection, union
@@ -165,7 +164,6 @@ The [genmesh](https://crates.io/crates/genmesh) crate provides primitives and CS
 
 ### Components
 - timer
-    - https://github.com/etrombly/bluepill/blob/master/examples/stepper_tasks.rs
 - analog to digital converter
 - encoders
     - https://crates.io/crates/qei
@@ -186,9 +184,6 @@ The [genmesh](https://crates.io/crates/genmesh) crate provides primitives and CS
     - https://crates.io/crates/w5500-https
     - https://crates.io/crates/w5500-ntp
     - https://crates.io/crates/w5500-regsim
-- ENC28J60
-    - https://crates.io/crates/enc28j60
-    - http://blog.japaric.io/wd-4-enc28j60/
 - ESP32
     - https://crates.io/crates/lib-rv32-mcu  -- risc-v emulator
 - [accellerometer](https://github.com/NeoBirth/accelerometer.rs)
@@ -244,7 +239,7 @@ The [genmesh](https://crates.io/crates/genmesh) crate provides primitives and CS
 - Security, safety, and authorization
 - Coordination
 
-## Initial setup should be via Wifi / Bluetooth / QR Code lasered onto device
+## Initial setup should be via Wifi / Bluetooth Low Energy / QR Code lasered onto device
 - log into app / web app / control backplane
 - add public key of device to control backplane (via QR code)
 - add public key of control backplane to device (via Wifi / BT)
@@ -395,14 +390,10 @@ The [genmesh](https://crates.io/crates/genmesh) crate provides primitives and CS
 - https://github.com/slowtec/tokio-modbus
 - https://github.com/locka99/opcua
 
-### Web API:
-- https://salvo.rs/
-
 ### Browser extensions:
 - https://github.com/Mubelotix/wasm-extension-template
 
 ### Database:
-- https://surrealdb.com/
 - Machines
     - Machine ID
     - Machine type
