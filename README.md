@@ -43,8 +43,7 @@ Todo:
 - [x] integrate cavalier contours
 - [ ] develop datastructure to represent idealized microcontroller
 - [ ] send and receive Rusty Object Notation inside HTTP messages
-- [ ] integrate https://github.com/setzer22/egui-gizmo
-- [ ] integrate https://github.com/setzer22/egui_node_graph
+- [ ] build blackjack for WASM
 
 ## Goals:
 - Easy setup
