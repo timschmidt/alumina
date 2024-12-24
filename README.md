@@ -364,7 +364,6 @@ The [genmesh](https://crates.io/crates/genmesh) crate provides primitives and CS
 - https://crates.io/crates/tock-registers
 - https://crates.io/crates/adskalman
 - https://crates.io/crates/atomic
-- https://crates.io/crates/bbqueue
 - https://crates.io/crates/debouncr
 - https://crates.io/crates/embedded-crc-macros
 - https://crates.io/crates/heapless
