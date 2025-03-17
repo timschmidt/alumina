@@ -101,7 +101,6 @@ follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-
 ## Modules
 #### Constructive Solid Geometry
 [csgrs](https://github.com/timschmidt/csgrs)
-![CSG Tree](../documentation/csg_tree.png "CSG Tree")
 
 - [Bresenham's algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm)
 - GJK ([Youtube](https://www.youtube.com/watch?v=ajv46BSqcK4))
