@@ -99,24 +99,13 @@ cargo build --target x86_64-pc-windows-gnu --release
 follow osxcross setup [here](https://wapl.es/rust/2019/02/17/rust-cross-compile-linux-to-macos.html)
 
 ## Modules
-### Algorithms
-#### Boolean difference, intersection, union
-The [genmesh](https://crates.io/crates/genmesh) crate provides primitives and CSG operations
-![Boolean difference](../documentation/boolean_difference.png "Boolean difference")
-![Boolean intersection](../documentation/boolean_intersection.png "Boolean intersection")
-![Boolean union](../documentation/boolean_union.png "Boolean union")
-
 #### Constructive Solid Geometry
+[csgrs](https://github.com/timschmidt/csgrs)
 ![CSG Tree](../documentation/csg_tree.png "CSG Tree")
 
 - [Bresenham's algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm)
 - GJK ([Youtube](https://www.youtube.com/watch?v=ajv46BSqcK4))
 - [curve tesselation](https://docs.rs/lyon_geom/latest/lyon_geom/)
-- calculate normal vector of line, angle, triangle
-- identify inside and outside of closed polylines (i.e. part and waste)
-    - https://en.wikipedia.org/wiki/Straight_skeleton
-    - https://doc.cgal.org/latest/Straight_skeleton_2/index.html
-- shape offsetting
     - https://raphlinus.github.io/curves/2022/09/09/parallel-beziers.html (from here: https://news.ycombinator.com/item?id=32784491 code here: https://github.com/linebender/kurbo/pull/230)
     - robust path operations: https://github.com/raphlinus/raphlinus.github.io/issues/79
     - https://github.com/linebender/kurbo docs: https://raphlinus.github.io/curves/2023/04/18/bezpath-simplify.html
@@ -150,11 +139,6 @@ The [genmesh](https://crates.io/crates/genmesh) crate provides primitives and CS
     - https://en.wikipedia.org/wiki/Root-finding_algorithms
 - [motion ramping](https://crates.io/crates/ramp-maker)
 - [motion smoothing](https://www.klipper3d.org/Kinematics.html) using a lookahead window
-- contour tracing from raster to vector
-    - [raster2svg](https://crates.io/crates/raster2svg) uses the [contour_tracing](https://crates.io/crates/contour_tracing) library.
-    - [marching squares](https://crates.io/crates/marching-squares) creates contour lines from a heightmap of Vec\<Vec\<i16\>\>
-- [coordinate transformations](https://en.wikipedia.org/wiki/List_of_common_coordinate_transformations)
-    - https://github.com/DaveKram/coord_transforms
 - https://blend2d.com/research/simplify_and_offset_bezier_curves.pdf
 - https://mecatronyx.gitlab.io/opencnc/opencn/CNC_Path_Planning_Algorithms/Geometric_Operations/Geometric_Operations.html
 - Solvespace's geometric solver is basically these files:
@@ -277,19 +261,6 @@ The [genmesh](https://crates.io/crates/genmesh) crate provides primitives and CS
 - STEP / IGES - https://github.com/ricosjp/ruststep
 - Blender
 
-### We may have to fix up the data:
-- for 2D and 3D:
-    - merge points closer than some minimum distance
-    - interpolate arcs and curves, otherwise tesselate complex shapes
-    - sort points and lines by connectedness
-- for 3D:
-    - fix inverted normals
-    - detect and fix manifoldness
-
-- https://crates.io/crates/geo/
-- https://crates.io/crates/geo-booleanop/
-- https://github.com/georust
-
 ### For 3D toolpathing operations, this means we will need an idea of the shape of the working material:
 - 
 
@@ -300,12 +271,6 @@ The [genmesh](https://crates.io/crates/genmesh) crate provides primitives and CS
 - https://github.com/sebcrozet/cordic
 - https://github.com/francisrstokes/githublog/blob/main/2024/5/10/cordic.md
 - https://core.ac.uk/works/8439118
-
-### We may need to turn shapes into triangles for the GPU:
-- https://github.com/nical/lyon
-- https://github.com/pcwalton/pathfinder
-- http://kiss3d.org/
-- https://crates.io/crates/earcutr
 
 ### We will translate the toolpath into commands for the MCU:
 - https://www.klipper3d.org/Protocol.html
@@ -427,7 +392,6 @@ The [genmesh](https://crates.io/crates/genmesh) crate provides primitives and CS
 - http://www.hashmismatch.net/pragmatic-bare-metal-rust/
 - http://blog.japaric.io/fearless-concurrency/
 - https://docs.rust-embedded.org/discovery/index.html
-- https://blend2d.com/research/simplify_and_offset_bezier_curves.pdf
 - [Bravais lattices](https://en.wikipedia.org/wiki/Bravais_lattice)
   In geometry and crystallography, a Bravais lattice is a category of translative symmetry groups (also known as lattices).  There are 5 Bravais lattices in two dimensions, 14 Bravais lattices in three dimensions, and 64 Bravais lattices in four dimensions. Of the 64, 23 are primitive and 41 are centered, 10 are split into enantiomorphic pairs.  All crystalline materials (not including quasicrystals) must, by definition, fit into one of these arrangements. For convenience a Bravais lattice is depicted by a unit cell which is a factor 1, 2, 3, or 4 larger than the primitive cell. Depending on the symmetry of a crystal or other pattern, the fundamental domain is again smaller, up to a factor 48.
 ### Testing:
